@@ -3,6 +3,7 @@ import { once } from 'lodash';
 export class Deferred<T> {
   promise:Promise<T>;
 
+  // eslint-disable-next-line no-unused-vars
   resolve!:(value:T | PromiseLike<T>) => void;
 
   reject!:(reason?:any)=>void;
@@ -48,3 +49,7 @@ export const genAppInstanceIdByName = (appName: string): string => {
   globalAppInstanceMap[appName]++;
   return `${appName}_${globalAppInstanceMap[appName]}`;
 };
+
+export function toArray<T>(array:T | T[]) :T[] {
+  return Array.isArray(array) ? array : [array];
+}

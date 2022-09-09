@@ -1,9 +1,14 @@
 import { importEntry } from 'import-html-entry';
-
+import { concat, mergeWith } from 'lodash';
 import { createSandboxContainer } from './sandbox/index';
+import type {
+  LoadableApp, FrameworkConfiguration, AppLifeCycles, LifeCycleFn,
+} from './interface';
+import {
+  Deferred, genAppInstanceIdByName, getDefaultTplWrapper, toArray,
+} from './utils';
 import * as css from './sandbox/css';
-import { LoadableApp } from './interface';
-import { Deferred, genAppInstanceIdByName, getDefaultTplWrapper } from './utils';
+import getAddons from './addons';
 
 const rawAppendChild = HTMLElement.prototype.appendChild;
 
@@ -54,9 +59,27 @@ function getAppWrapperGetter(
 
 let prevAppUnmountedDeferred: Deferred<void>;
 
-export async function loadApp<T>(app:LoadableApp<T>) {
+function execHooksChain<T extends Record<string, any>>(
+  hooks:Array<LifeCycleFn<T>>,
+  app:LoadableApp<T>,
+  global = window,
+) {
+  if (hooks.length) {
+    return hooks.reduce((chain, hook) => chain.then(() => hook(app, global)), Promise.resolve());
+  }
+  return Promise.resolve();
+}
+
+export async function loadApp<T>(
+  app:LoadableApp<T>,
+  // eslint-disable-next-line default-param-last
+  config:FrameworkConfiguration = {},
+  lifeCycles?:Pick<AppLifeCycles<T>, 'beforeMount'|'beforeUnmount'>,
+) {
   const { container, name: appName, entry } = app;
   const appInstanceId = genAppInstanceIdByName(appName);
+
+  const { sandbox = true, globalContext = window } = config;
   const { execScripts, template } = await importEntry({
     ...entry,
   });
@@ -64,7 +87,6 @@ export async function loadApp<T>(app:LoadableApp<T>) {
   // as single-spa load and bootstrap new app parallel with other apps unmounting
   // (see https://github.com/CanopyTax/single-spa/blob/master/src/navigation/reroute.js#L74)
   // we need wait to load the app until all apps are finishing unmount in singular mode
-  // 浏览器事件队列 清空为止，类似vue nextTick,一般都是single app
   await (prevAppUnmountedDeferred && prevAppUnmountedDeferred.promise);
 
   const appContent = getDefaultTplWrapper(appInstanceId)(template);
@@ -74,13 +96,45 @@ export async function loadApp<T>(app:LoadableApp<T>) {
   // 确保每次应用加载前容器 dom 结构已经设置完毕
   render(appElement, container);
 
-  const sandboxContainer = createSandboxContainer(appName);
-  const { proxy } = sandboxContainer.instance;
-  const scriptExports: any = await execScripts(proxy, true);
+  // 初始化沙箱
+  let mountSandbox = () => Promise.resolve();
+  let unmountSandbox = () => Promise.resolve();
+  let global = globalContext;
+  if (sandbox) {
+    const sandboxContainer = createSandboxContainer(appName);
+    mountSandbox = sandboxContainer.mount;
+    unmountSandbox = sandboxContainer.unmount;
+    // 用沙箱的代理对象作为接下来使用的全局对象
+    global = sandboxContainer.instance.proxy as typeof window;
+  }
+
+  const { beforeMount = [], beforeUnmount = [] } = mergeWith(
+    {},
+    getAddons(global),
+    lifeCycles,
+    (v1, v2) => concat(v1 ?? [], v2 ?? []),
+  );
+
+  // todo 解析微应用
+  const scriptExports: any = await execScripts(global, true);
   console.log('script exports===>', scriptExports, appElement);
+
   return {
-    mount: [async () => {
-      scriptExports.mount({ container: appWrapperGetter() });
-    }],
+    name: appInstanceId,
+    mount: [
+      mountSandbox,
+      async () => execHooksChain(toArray(beforeMount), app, global),
+      async () => {
+        scriptExports.mount({ container: appWrapperGetter() });
+      }],
+    unmount: [
+      async () => execHooksChain(toArray(beforeUnmount), app, global),
+      unmountSandbox,
+      async () => {
+        if (prevAppUnmountedDeferred) {
+          prevAppUnmountedDeferred.resolve();
+        }
+      },
+    ],
   };
 }
