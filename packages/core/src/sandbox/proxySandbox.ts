@@ -32,6 +32,24 @@ const unscopables = {
   requestAnimationFrame: true,
 };
 
+// 直接修改window 对象
+const variableWhiteList: PropertyKey[] = [
+  // FIXME System.js used a indirect call with eval, which would make it scope escape to global
+  // To make System.js works well, we write it back to global window temporary
+  // see https://github.com/systemjs/systemjs/blob/457f5b7e8af6bd120a279540477552a07d5de086/src/evaluate.js#L106
+  'System',
+
+  // see https://github.com/systemjs/systemjs/blob/457f5b7e8af6bd120a279540477552a07d5de086/src/instantiate.js#L357
+  '__cjsWrapper',
+
+  // for react hot reload
+  // see https://github.com/facebook/create-react-app/blob/66bf7dfc43350249e2f09d138a20840dae8a0a4a/packages/react-error-overlay/src/index.js#L180
+  '__REACT_ERROR_OVERLAY_GLOBAL_HOOK__',
+];
+
+// fakeWindow 和 rawWindow 相互独力的属性
+// 微应用中类似写法window.Vue直接读取fakeWindow,不会读取rawWindow
+const variableBlackList:PropertyKey[] = ['Vue', 'browerCollector'];
 /**
  * fastest(at most time) unique array method
  * @see https://jsperf.com/array-filter-unique/30
@@ -95,7 +113,13 @@ export default class ProxySandbox implements SandBox {
   }
 
   inactive() {
-    --activeSandboxCount;
+    if (--activeSandboxCount === 0) {
+      variableWhiteList.forEach((p) => {
+        if (this.proxy.hasOwnProperty(p)) {
+          delete this.globalContext[p];
+        }
+      });
+    }
     this.sandboxRunning = false;
   }
 
@@ -132,6 +156,11 @@ export default class ProxySandbox implements SandBox {
             target[p] = value;
           }
 
+          if (variableWhiteList.indexOf(p) !== -1) {
+            // eslint-disable-next-line no-param-reassign
+            globalContext[p] = value;
+          }
+
           // 记录变更记录
           updatedValueSet.add(p);
 
@@ -144,7 +173,7 @@ export default class ProxySandbox implements SandBox {
       },
       get(target: FakeWindow, p: PropertyKey): any {
         // todo Vue ，browerCollector 和宿主应用独立
-        if (p === 'Vue' || p === 'browerCollector') return target[p];
+        if (variableBlackList.indexOf(p) !== -1) return target[p];
         if (p === Symbol.unscopables) return unscopables;
         // 判断用window.top, window.parent等也返回代理对象，在ifream环境也会返回代理对象。做到了真正的隔离，
         if (p === 'window' || p === 'self') {

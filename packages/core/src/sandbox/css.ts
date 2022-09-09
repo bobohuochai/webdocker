@@ -9,17 +9,17 @@ const arrayify = <T>(list:CSSRuleList | any[]) => [].slice.call(list, 0) as T[];
 // https://developer.mozilla.org/en-US/docs/Web/API/CSSRule
 // eslint-disable-next-line no-shadow
 enum RuleType {
-    // type: rule will be rewrote
-    STYLE = 1,
-    MEDIA = 4,
-    SUPPORTS = 12,
+  // type: rule will be rewrote
+  STYLE = 1,
+  MEDIA = 4,
+  SUPPORTS = 12,
 
-    // type: value will be kept
-    IMPORT = 3,
-    FONT_FACE = 5,
-    PAGE = 6,
-    KEYFRAMES = 7,
-    KEYFRAME = 8,
+  // type: value will be kept
+  IMPORT = 3,
+  FONT_FACE = 5,
+  PAGE = 6,
+  KEYFRAMES = 7,
+  KEYFRAME = 8,
 }
 
 export function parseRulePostCss(css: string) {
