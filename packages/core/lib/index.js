@@ -1,5 +1,5 @@
 import { loadApp } from './loader';
 export default {
-    loadApp,
+    loadApp: loadApp,
 };
 export * from './interface';

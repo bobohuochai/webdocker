@@ -1,3 +1,4 @@
+import { __assign } from "tslib";
 export function isBoundedFunction(fn) {
     return fn.name.indexOf('bound ') === 0 && !fn.hasOwnProperty('prototype');
 }
@@ -7,11 +8,11 @@ export function isBoundedFunction(fn) {
  * typeof document.all === 'function' // true
  * We need to discriminate safari for better performance
  */
-const naughtySafari = typeof document.all === 'function' && typeof document.all === 'undefined';
-export const isCallable = (fn) => naughtySafari ? typeof fn === 'function' && typeof fn !== 'undefined' : typeof fn === 'function';
+var naughtySafari = typeof document.all === 'function' && typeof document.all === 'undefined';
+export var isCallable = function (fn) { return naughtySafari ? typeof fn === 'function' && typeof fn !== 'undefined' : typeof fn === 'function'; };
 export function isConstructable(fn) {
     // prototype methods might be changed while code running, so we need check it every time
-    const hasPrototypeMethods = fn.prototype && fn.prototype.constructor === fn
+    var hasPrototypeMethods = fn.prototype && fn.prototype.constructor === fn
         && Object.getOwnPropertyNames(fn.prototype).length > 1;
     if (hasPrototypeMethods)
         return true;
@@ -21,17 +22,17 @@ export function isConstructable(fn) {
       3. class 函数
       满足其一则可认定为构造函数
      */
-    let constructable = hasPrototypeMethods;
+    var constructable = hasPrototypeMethods;
     if (!constructable) {
         // fn.toString has a significant performance overhead, if hasPrototypeMethods check not passed, we will check the function string with regex
-        const fnString = fn.toString();
-        const constructableFunctionRegex = /^function\b\s[A-Z].*/;
-        const classRegex = /^class\b/;
+        var fnString = fn.toString();
+        var constructableFunctionRegex = /^function\b\s[A-Z].*/;
+        var classRegex = /^class\b/;
         constructable = constructableFunctionRegex.test(fnString) || classRegex.test(fnString);
     }
     return constructable;
 }
-const functionBoundedValueMap = new WeakMap();
+var functionBoundedValueMap = new WeakMap();
 export function getTargetValue(target, value) {
     /*
       仅绑定 isCallable && !isBoundedFunction && !isConstructable 的函数对象，如 window.console、window.atob 这类，不然微应用中调用时会抛出 Illegal invocation 异常
@@ -39,15 +40,15 @@ export function getTargetValue(target, value) {
       @warning 这里不要随意替换成别的判断方式，因为可能触发一些 edge case（比如在 lodash.isFunction 在 iframe 上下文中可能由于调用了 top window 对象触发的安全异常）
      */
     if (isCallable(value) && !isBoundedFunction(value) && !isConstructable(value)) {
-        const cachedBoundFunction = functionBoundedValueMap.get(value);
+        var cachedBoundFunction = functionBoundedValueMap.get(value);
         if (cachedBoundFunction) {
             return cachedBoundFunction;
         }
-        const boundValue = Function.prototype.bind.call(value, target);
+        var boundValue = Function.prototype.bind.call(value, target);
         // some callable function has custom fields, we need to copy the enumerable props to boundValue. such as moment function.
         // use for..in rather than Object.keys.forEach for performance reason
         // eslint-disable-next-line guard-for-in,no-restricted-syntax
-        for (const key in value) {
+        for (var key in value) {
             boundValue[key] = value[key];
         }
         // copy prototype if bound function not have but target one have
@@ -62,11 +63,11 @@ export function getTargetValue(target, value) {
         // Some util, like `function isNative() {  return typeof Ctor === 'function' && /native code/.test(Ctor.toString()) }` relies on the original `toString()` result
         // but bound functions will always return "function() {[native code]}" for `toString`, which is misleading
         if (typeof value.toString === 'function') {
-            const valueHasInstanceToString = value.hasOwnProperty('toString') && !boundValue.hasOwnProperty('toString');
-            const boundValueHasPrototypeToString = boundValue.toString === Function.prototype.toString;
+            var valueHasInstanceToString = value.hasOwnProperty('toString') && !boundValue.hasOwnProperty('toString');
+            var boundValueHasPrototypeToString = boundValue.toString === Function.prototype.toString;
             if (valueHasInstanceToString || boundValueHasPrototypeToString) {
-                const originToStringDescriptor = Object.getOwnPropertyDescriptor(valueHasInstanceToString ? value : Function.prototype, 'toString');
-                Object.defineProperty(boundValue, 'toString', Object.assign(Object.assign({}, originToStringDescriptor), ((originToStringDescriptor === null || originToStringDescriptor === void 0 ? void 0 : originToStringDescriptor.get) ? null : { value: () => value.toString() })));
+                var originToStringDescriptor = Object.getOwnPropertyDescriptor(valueHasInstanceToString ? value : Function.prototype, 'toString');
+                Object.defineProperty(boundValue, 'toString', __assign(__assign({}, originToStringDescriptor), ((originToStringDescriptor === null || originToStringDescriptor === void 0 ? void 0 : originToStringDescriptor.get) ? null : { value: function () { return value.toString(); } })));
             }
         }
         functionBoundedValueMap.set(value, boundValue);

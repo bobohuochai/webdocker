@@ -1,17 +1,23 @@
-import { __awaiter } from "tslib";
+import { __awaiter, __generator } from "tslib";
 import ProxySandbox from './proxySandbox';
 export function createSandboxContainer(appName, globalContext) {
-    const sandbox = new ProxySandbox(appName, globalContext);
+    var sandbox = new ProxySandbox(appName, globalContext);
     return {
         instance: sandbox,
-        mount() {
-            return __awaiter(this, void 0, void 0, function* () {
-                sandbox.active();
+        mount: function () {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    sandbox.active();
+                    return [2 /*return*/];
+                });
             });
         },
-        unmount() {
-            return __awaiter(this, void 0, void 0, function* () {
-                sandbox.inactive();
+        unmount: function () {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    sandbox.inactive();
+                    return [2 /*return*/];
+                });
             });
         },
     };

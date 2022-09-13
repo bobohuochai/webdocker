@@ -1,7 +1,7 @@
 import { importEntry } from 'import-html-entry';
 import { concat, mergeWith } from 'lodash';
 import { createSandboxContainer } from './sandbox/index';
-import type {
+import {
   LoadableApp, FrameworkConfiguration, AppLifeCycles, LifeCycleFn,
 } from './interface';
 import {
@@ -28,7 +28,7 @@ function createElement(appContent:string, appInstanceId:string) {
     css.process(appElement!, stylesheetElement, appInstanceId);
   });
 
-  // 添加微应用入口
+  // todo 添加微应用入口
   const subappElement = document.createElement('div');
   subappElement.setAttribute('id', WebDockerSubAppContainerAttr);
   rawAppendChild.call(appElement, subappElement);
@@ -74,12 +74,14 @@ export async function loadApp<T>(
   app:LoadableApp<T>,
   // eslint-disable-next-line default-param-last
   config:FrameworkConfiguration = {},
-  lifeCycles?:Pick<AppLifeCycles<T>, 'beforeMount'|'beforeUnmount'>,
+  lifeCycles?:Pick<AppLifeCycles<T>, 'beforeMount'|'beforeUnmount'|'beforeLoad'>,
 ) {
   const { container, name: appName, entry } = app;
   const appInstanceId = genAppInstanceIdByName(appName);
 
   const { sandbox = true, globalContext = window } = config;
+
+  // https://github.com/kuitos/import-html-entry
   const { execScripts, template } = await importEntry({
     ...entry,
   });
@@ -108,33 +110,56 @@ export async function loadApp<T>(
     global = sandboxContainer.instance.proxy as typeof window;
   }
 
-  const { beforeMount = [], beforeUnmount = [] } = mergeWith(
+  const { beforeLoad = [], beforeMount = [], beforeUnmount = [] } = mergeWith(
     {},
     getAddons(global),
     lifeCycles,
     (v1, v2) => concat(v1 ?? [], v2 ?? []),
   );
 
-  // todo 解析微应用
-  const scriptExports: any = await execScripts(global, true);
-  console.log('script exports===>', scriptExports, appElement);
+  await execHooksChain(toArray(beforeLoad), app, global);
 
-  return {
-    name: appInstanceId,
-    mount: [
+  const exportMicroApp:any = await execScripts(global, true);
+  console.log('export micro app', exportMicroApp);
+  const { mount, unmount } = exportMicroApp;
+
+  const mountFnGetter = () => {
+    const mountFn = [
       mountSandbox,
       async () => execHooksChain(toArray(beforeMount), app, global),
       async () => {
-        scriptExports.mount({ container: appWrapperGetter() });
-      }],
-    unmount: [
+        mount({ container: appWrapperGetter() });
+      },
+      // initialize the unmount defer after app mounted and resolve the defer after it unmounted
+      async () => {
+        prevAppUnmountedDeferred = new Deferred<void>();
+      }];
+    return async () => {
+      await execHooksChain(mountFn, app, global);
+      return Promise.resolve();
+    };
+  };
+
+  const unmountFnGetter = () => {
+    const unmountFn = [
       async () => execHooksChain(toArray(beforeUnmount), app, global),
+      async () => unmount({ container: appWrapperGetter() }),
       unmountSandbox,
       async () => {
         if (prevAppUnmountedDeferred) {
           prevAppUnmountedDeferred.resolve();
         }
       },
-    ],
+    ];
+    return async () => {
+      await execHooksChain(unmountFn, app, global);
+      return Promise.resolve();
+    };
+  };
+
+  return {
+    name: appInstanceId,
+    mount: mountFnGetter(),
+    unmount: unmountFnGetter(),
   };
 }

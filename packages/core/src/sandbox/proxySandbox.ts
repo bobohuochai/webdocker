@@ -116,7 +116,7 @@ export default class ProxySandbox implements SandBox {
     if (--activeSandboxCount === 0) {
       variableWhiteList.forEach((p) => {
         if (this.proxy.hasOwnProperty(p)) {
-          delete this.globalContext[p];
+          delete (this.globalContext as Record<string, any>)[p as string];
         }
       });
     }
@@ -158,7 +158,7 @@ export default class ProxySandbox implements SandBox {
 
           if (variableWhiteList.indexOf(p) !== -1) {
             // eslint-disable-next-line no-param-reassign
-            globalContext[p] = value;
+            (globalContext as Record<string, any>)[p as string] = value;
           }
 
           // 记录变更记录

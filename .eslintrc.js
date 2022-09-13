@@ -52,4 +52,5 @@ module.exports = {
       },
     },
   },
+  ignorePatterns: ['**/lib/*', '**/vendor/*.js'],
 };

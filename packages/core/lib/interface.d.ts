@@ -1,3 +1,9 @@
+declare global {
+    interface Window {
+        __POWERED_BY_WEBDOCKER__?: boolean;
+        __INJECTED_PUBLIC_PATH_BY_WEBDOKCER__?: string;
+    }
+}
 export declare type WindowProxy = Window;
 export declare type SandBox = {
     /** 沙箱的名字 */
@@ -23,3 +29,15 @@ export interface LoadableApp<T extends Record<string, any>> {
     container: string | HTMLElement;
     props?: T;
 }
+export declare type LifeCycleFn<T extends Record<string, any>> = (app?: LoadableApp<T>, global?: typeof window) => Promise<any>;
+export declare type AppLifeCycles<T extends Record<string, any>> = {
+    beforeMount?: LifeCycleFn<T> | Array<LifeCycleFn<T>>;
+    beforeUnmount?: LifeCycleFn<T> | Array<LifeCycleFn<T>>;
+    mount?: LifeCycleFn<T> | Array<LifeCycleFn<T>>;
+    unmount?: LifeCycleFn<T> | Array<LifeCycleFn<T>>;
+    beforeLoad?: LifeCycleFn<T> | Array<LifeCycleFn<T>>;
+};
+export declare type FrameworkConfiguration = {
+    globalContext?: typeof window;
+    sandbox?: boolean;
+};

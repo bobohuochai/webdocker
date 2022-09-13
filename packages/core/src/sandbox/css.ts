@@ -22,50 +22,51 @@ enum RuleType {
   KEYFRAME = 8,
 }
 
+// eslint-disable-next-line no-inner-declarations
+function travser(nodes: ChildNode[]) {
+  return nodes.reduce((ruleList, item) => {
+    let rule: any;
+    if (item.type === 'rule') {
+      rule = {
+        selectorText: item.selector,
+        cssText: item.toString(),
+        type: RuleType.STYLE,
+      };
+    } else if (item.type === 'atrule') {
+      if (item.name === 'media') {
+        rule = {
+          type: RuleType.MEDIA,
+          conditionText: item.params,
+          cssText: item.toString(),
+          cssRules: travser(item.nodes),
+        };
+      } else if (item.name === 'supports') {
+        rule = {
+          type: RuleType.SUPPORTS,
+          cssText: item.toString(),
+          cssRules: travser(item.nodes),
+          conditionText: item.params,
+        };
+      } else if (item.name === 'charset') {
+        rule = {
+          cssText: `${item.toString()};`,
+        };
+      } else {
+        rule = {
+          cssText: item.toString(),
+        };
+      }
+    }
+    if (rule) {
+      return ruleList.concat(rule);
+    }
+    return ruleList;
+  }, [] as any);
+}
+
 export function parseRulePostCss(css: string) {
   try {
     const root = postcss.parse(css);
-    // eslint-disable-next-line no-inner-declarations
-    function travser(nodes: ChildNode[]) {
-      return nodes.reduce((ruleList, item) => {
-        let rule: any;
-        if (item.type === 'rule') {
-          rule = {
-            selectorText: item.selector,
-            cssText: item.toString(),
-            type: RuleType.STYLE,
-          };
-        } else if (item.type === 'atrule') {
-          if (item.name === 'media') {
-            rule = {
-              type: RuleType.MEDIA,
-              conditionText: item.params,
-              cssText: item.toString(),
-              cssRules: travser(item.nodes),
-            };
-          } else if (item.name === 'supports') {
-            rule = {
-              type: RuleType.SUPPORTS,
-              cssText: item.toString(),
-              cssRules: travser(item.nodes),
-              conditionText: item.params,
-            };
-          } else if (item.name === 'charset') {
-            rule = {
-              cssText: `${item.toString()};`,
-            };
-          } else {
-            rule = {
-              cssText: item.toString(),
-            };
-          }
-        }
-        if (rule) {
-          return ruleList.concat(rule);
-        }
-        return ruleList;
-      }, [] as any);
-    }
     return travser(root.nodes);
   } catch (error) {
     return [];
