@@ -1,7 +1,7 @@
 import postcss from 'postcss';
 import type { ChildNode } from 'postcss';
 
-// style标签插入head
+// style标签插入body
 const rawDocumentBodyAppend = HTMLBodyElement.prototype.appendChild;
 
 const arrayify = <T>(list:CSSRuleList | any[]) => [].slice.call(list, 0) as T[];
