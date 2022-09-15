@@ -75,6 +75,7 @@ config, lifeCycles) {
                     // (see https://github.com/CanopyTax/single-spa/blob/master/src/navigation/reroute.js#L74)
                     // we need wait to load the app until all apps are finishing unmount in singular mode
                     _h.sent();
+                    console.log('app id===>',appInstanceId)
                     appContent = getDefaultTplWrapper(appInstanceId)(template);
                     appElement = createElement(appContent, appInstanceId);
                     appWrapperGetter = getAppWrapperGetter(function () { return appElement; });

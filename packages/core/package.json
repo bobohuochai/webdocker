@@ -15,7 +15,11 @@
   "author": "xujun",
   "license": "MIT",
   "devDependencies": {
-    "@types/lodash": "^4.14.184"
+    "@types/jest": "^29.0.2",
+    "@types/lodash": "^4.14.184",
+    "jest": "^29.0.3",
+    "ts-jest": "^29.0.1",
+    "ts-node": "^10.9.1"
   },
   "dependencies": {
     "import-html-entry": "^1.12.0",
