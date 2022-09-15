@@ -26,7 +26,6 @@ describe('getTargetValue', () => {
     const result = {};
     const test = {};
     prototypeAddedAfterFirstInvocation.call(test, '123');
-    console.log(11111, test);
     notConstructableFunction.call(result, '123');
     expect(result).toStrictEqual({});
     expect((window as any).field).toEqual('123');

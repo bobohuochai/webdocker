@@ -85,7 +85,6 @@ function createFakeWindow(global:Window) {
       Object.defineProperty(fakeWindow, p, Object.freeze(descriptor));
     }
   });
-  console.log('fakeWindow===>', fakeWindow);
   return { fakeWindow, propertiesWithGetter };
 }
 
@@ -126,7 +125,6 @@ export default class ProxySandbox implements SandBox {
   constructor(name:string, globalContext = window) {
     this.name = name;
     const { updatedValueSet } = this;
-    console.log('parent global==>', globalContext);
     this.globalContext = globalContext;
     // 通过createFakeWindow创建一个fakeWindow对象
     const { fakeWindow, propertiesWithGetter } = createFakeWindow(globalContext);
