@@ -195,4 +195,5 @@ export default {
   transform: {
     '^.+\\.ts$': '<rootDir>/node_modules/ts-jest',
   },
+  testEnvironment: 'jsdom',
 };
