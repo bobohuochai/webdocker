@@ -19,8 +19,8 @@
 12 error Error: Command failed: yarn run build
 12 error error Command failed with exit code 2.
 12 error $ rm -rf lib && tsc
-12 error src/loader.ts(118,24): error TS2345: Argument of type '(LifeCycleFn<Record<string, any>> | LifeCycleFn<Record<string, any>>[]) & (LifeCycleFn<T> | LifeCycleFn<T>[])' is not assignable to parameter of type 'LifeCycleFn<Record<string, any>>[]'.
-12 error   Type 'LifeCycleFn<Record<string, any>> & LifeCycleFn<T>' is missing the following properties from type 'LifeCycleFn<Record<string, any>>[]': pop, push, concat, join, and 25 more.
+12 error src/sandbox/css.ts(1,21): error TS2307: Cannot find module 'postcss' or its corresponding type declarations.
+12 error src/sandbox/css.ts(2,32): error TS2307: Cannot find module 'postcss' or its corresponding type declarations.
 12 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 12 error
 12 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11

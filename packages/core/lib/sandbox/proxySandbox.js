@@ -38,7 +38,7 @@ var variableWhiteList = [
     // see https://github.com/facebook/create-react-app/blob/66bf7dfc43350249e2f09d138a20840dae8a0a4a/packages/react-error-overlay/src/index.js#L180
     '__REACT_ERROR_OVERLAY_GLOBAL_HOOK__',
 ];
-// fakeWindow 和 rawWindow 相互独力的属性
+// fakeWindow 和 rawWindow 相互独立的属性
 // 微应用中类似写法window.Vue直接读取fakeWindow,不会读取rawWindow
 var variableBlackList = ['Vue', 'browerCollector'];
 /**
@@ -74,7 +74,6 @@ function createFakeWindow(global) {
             Object.defineProperty(fakeWindow, p, Object.freeze(descriptor));
         }
     });
-    console.log('fakeWindow===>', fakeWindow);
     return { fakeWindow: fakeWindow, propertiesWithGetter: propertiesWithGetter };
 }
 // 全局变量，记录沙箱激活的数量
@@ -90,7 +89,6 @@ var ProxySandbox = /** @class */ (function () {
         this.latestSetProp = null;
         this.name = name;
         var updatedValueSet = this.updatedValueSet;
-        console.log('parent global==>', globalContext);
         this.globalContext = globalContext;
         // 通过createFakeWindow创建一个fakeWindow对象
         var _a = createFakeWindow(globalContext), fakeWindow = _a.fakeWindow, propertiesWithGetter = _a.propertiesWithGetter;

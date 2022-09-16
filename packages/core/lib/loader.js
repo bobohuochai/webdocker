@@ -30,7 +30,6 @@ function getContainer(container) {
 }
 function render(element, container) {
     var containerElement = getContainer(container);
-    console.log('render===>', containerElement, element);
     if (containerElement && element) {
         rawAppendChild.call(containerElement, element);
     }
@@ -75,7 +74,6 @@ config, lifeCycles) {
                     // (see https://github.com/CanopyTax/single-spa/blob/master/src/navigation/reroute.js#L74)
                     // we need wait to load the app until all apps are finishing unmount in singular mode
                     _h.sent();
-                    console.log('app id===>',appInstanceId)
                     appContent = getDefaultTplWrapper(appInstanceId)(template);
                     appElement = createElement(appContent, appInstanceId);
                     appWrapperGetter = getAppWrapperGetter(function () { return appElement; });

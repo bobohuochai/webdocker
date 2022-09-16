@@ -1,5 +1,5 @@
 import postcss from 'postcss';
-// style标签插入head
+// style标签插入body
 var rawDocumentBodyAppend = HTMLBodyElement.prototype.appendChild;
 var arrayify = function (list) { return [].slice.call(list, 0); };
 // https://developer.mozilla.org/en-US/docs/Web/API/CSSRule
