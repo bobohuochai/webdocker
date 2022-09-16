@@ -1,5 +1,5 @@
 import { importEntry } from 'import-html-entry';
-import { concat, mergeWith } from 'lodash';
+import { concat, isFunction, mergeWith } from 'lodash';
 import { createSandboxContainer } from './sandbox/index';
 import {
   LoadableApp, FrameworkConfiguration, AppLifeCycles, LifeCycleFn,
@@ -28,7 +28,7 @@ function createElement(appContent:string, appInstanceId:string) {
     css.process(appElement!, stylesheetElement, appInstanceId);
   });
 
-  // todo 添加微应用入口
+  // FIXME 添加微应用入口
   const subappElement = document.createElement('div');
   subappElement.setAttribute('id', WebDockerSubAppContainerAttr);
   rawAppendChild.call(appElement, subappElement);
@@ -67,6 +67,19 @@ function execHooksChain<T extends Record<string, any>>(
     return hooks.reduce((chain, hook) => chain.then(() => hook(app, global)), Promise.resolve());
   }
   return Promise.resolve();
+}
+
+function validateExportLifecycle(exports:any) {
+  const { mount, unmount } = exports ?? {};
+  return isFunction(mount) && isFunction(unmount);
+}
+
+function getLifecyclesFromExports(scriptExports:any, appName:string) {
+  if (validateExportLifecycle(scriptExports)) {
+    return scriptExports;
+  }
+
+  throw new Error(`You need to export lifecycle functions in ${appName} entry`);
 }
 
 export async function loadApp<T>(
@@ -120,7 +133,7 @@ export async function loadApp<T>(
 
   const exportMicroApp:any = await execScripts(global, true);
   console.log('export micro app', exportMicroApp);
-  const { mount, unmount } = exportMicroApp;
+  const { mount, unmount } = getLifecyclesFromExports(exportMicroApp, appName);
 
   const mountFnGetter = () => {
     const mountFn = [
