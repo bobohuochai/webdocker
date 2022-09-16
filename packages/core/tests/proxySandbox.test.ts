@@ -183,3 +183,23 @@ test('descriptor of non-configurable and non-enumrable property existed in raw w
     configurable: false,
   });
 });
+
+test('window.Vue & window.browerCollector should not equal with the sandbox', () => {
+  Object.defineProperty(window, 'Vue', {
+    value: 123,
+    writable: true,
+    enumerable: true,
+    configurable: true,
+  });
+  Object.defineProperty(window, 'browerCollector', {
+    value: 'blackVar',
+    writable: true,
+    enumerable: true,
+    configurable: true,
+  });
+  const { proxy } = new ProxySandbox('variableBlacklist');
+  expect(proxy.Vue).toBe(undefined);
+  expect(window.Vue).toBe(123);
+  expect(proxy.browerCollector).toBe(undefined);
+  expect(window.browerCollector).toBe('blackVar');
+});

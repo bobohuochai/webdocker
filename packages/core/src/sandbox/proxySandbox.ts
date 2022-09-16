@@ -47,7 +47,7 @@ const variableWhiteList: PropertyKey[] = [
   '__REACT_ERROR_OVERLAY_GLOBAL_HOOK__',
 ];
 
-// fakeWindow 和 rawWindow 相互独力的属性
+// fakeWindow 和 rawWindow 相互独立的属性
 // 微应用中类似写法window.Vue直接读取fakeWindow,不会读取rawWindow
 const variableBlackList:PropertyKey[] = ['Vue', 'browerCollector'];
 /**

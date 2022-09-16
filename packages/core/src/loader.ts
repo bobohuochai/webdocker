@@ -41,7 +41,6 @@ function getContainer(container:string|HTMLElement):HTMLElement|null {
 
 function render(element:HTMLElement, container: string| HTMLElement) {
   const containerElement = getContainer(container);
-  console.log('render===>', containerElement, element);
   if (containerElement && element) {
     rawAppendChild.call(containerElement, element);
   }
