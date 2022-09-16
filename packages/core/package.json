@@ -10,7 +10,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test jest",
     "lint": "eslint",
-    "build": "rm -rf lib && tsc"
+    "build": "rm -rf lib && tsc -p tsconfig.build.json"
   },
   "author": "xujun",
   "license": "MIT",

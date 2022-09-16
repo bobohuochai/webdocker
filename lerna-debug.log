@@ -18,9 +18,8 @@
 11 error execute callback with error
 12 error Error: Command failed: yarn run build
 12 error error Command failed with exit code 2.
-12 error $ rm -rf lib && tsc
-12 error src/sandbox/css.ts(1,21): error TS2307: Cannot find module 'postcss' or its corresponding type declarations.
-12 error src/sandbox/css.ts(2,32): error TS2307: Cannot find module 'postcss' or its corresponding type declarations.
+12 error $ rm -rf lib && tsc -p tsconfig.build.json
+12 error error TS18003: No inputs were found in config file '/Users/xujun/Documents/codes/webDocker/packages/core/tsconfig.build.json'. Specified 'include' paths were '["tests/**/*.test.ts"]' and 'exclude' paths were '["node_modules","tests/**/*.test.ts"]'.
 12 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 12 error
 12 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11
