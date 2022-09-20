@@ -1,5 +1,5 @@
 # @webdocker/vue-host-application
-宿主应用（Vue 2.x)接入@webdocker框架
+宿主应用（Vue 2.x)使用@webdocker框架接入微应用
 
 ## How to use
 ```vue(2.x)

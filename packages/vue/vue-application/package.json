@@ -10,7 +10,8 @@
     "vue": "~2.6"
   },
   "keywords": [
-    "vue"
+    "vue",
+    "micro app"
   ],
   "author": "xujun",
   "license": "MIT"
