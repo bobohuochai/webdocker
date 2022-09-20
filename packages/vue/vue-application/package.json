@@ -1,0 +1,17 @@
+{
+  "name": "@webdocker/vue-host-application",
+  "version": "1.0.0-beta.1",
+  "description": "Vue Host Application Component",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@webdocker/core": "^1.0"
+  },
+  "peerDependencies": {
+    "vue": "~2.6"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "xujun",
+  "license": "MIT"
+}
