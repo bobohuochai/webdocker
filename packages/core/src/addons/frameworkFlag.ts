@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-import type { AppLifeCycles } from '../interface';
+import type { FrameworkLifecycles } from '../interface';
 
-export default function getAddOn(global:Window):AppLifeCycles<any> {
+export default function getAddOn(global:Window):FrameworkLifecycles<any> {
   return {
     async beforeLoad() {
       global.__POWERED_BY_WEBDOCKER__ = true;

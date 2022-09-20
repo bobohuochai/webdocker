@@ -2,7 +2,7 @@ import { importEntry } from 'import-html-entry';
 import { concat, isFunction, mergeWith } from 'lodash';
 import { createSandboxContainer } from './sandbox/index';
 import {
-  LoadableApp, FrameworkConfiguration, FrameworkLifeCycles, LifeCycleFn, AppLifecycles,
+  LoadableApp, FrameworkConfiguration, FrameworkLifecycles, LifecycleFn, AppLifecycles,
 } from './interface';
 import {
   Deferred, genAppInstanceIdByName, getDefaultTplWrapper, toArray,
@@ -59,7 +59,7 @@ function getAppWrapperGetter(
 let prevAppUnmountedDeferred: Deferred<void>;
 
 function execHooksChain<T extends Record<string, any>>(
-  hooks:Array<LifeCycleFn<T>>,
+  hooks:Array<LifecycleFn<T>>,
   app:LoadableApp<T>,
   global = window,
 ) {
@@ -86,7 +86,7 @@ export async function loadApp<T>(
   app:LoadableApp<T>,
   // eslint-disable-next-line default-param-last
   config:FrameworkConfiguration = {},
-  lifeCycles?:FrameworkLifeCycles<T>,
+  lifeCycles?:FrameworkLifecycles<T>,
 ) {
   const { container, name: appName, entry } = app;
   const appInstanceId = genAppInstanceIdByName(appName);

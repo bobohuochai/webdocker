@@ -28,12 +28,12 @@ export interface LoadableApp<T extends Record<string, any>> {
   props?:T
 }
 
-export type LifeCycleFn<T extends Record<string, any>> = (app?:LoadableApp<T>, global?:typeof window)=>Promise<any>
+export type LifecycleFn<T extends Record<string, any>> = (app?:LoadableApp<T>, global?:typeof window)=>Promise<any>
 
-export type FrameworkLifeCycles<T extends Record<string, any>> = {
-  beforeMount?: LifeCycleFn<T> | Array<LifeCycleFn<T>>; // function before app mount
-  beforeUnmount?: LifeCycleFn<T> | Array<LifeCycleFn<T>>;
-  beforeLoad?:LifeCycleFn<T> | Array<LifeCycleFn<T>>;
+export type FrameworkLifecycles<T extends Record<string, any>> = {
+  beforeMount?: LifecycleFn<T> | Array<LifecycleFn<T>>; // function before app mount
+  beforeUnmount?: LifecycleFn<T> | Array<LifecycleFn<T>>;
+  beforeLoad?:LifecycleFn<T> | Array<LifecycleFn<T>>;
 }
 
 export type ExportLifeCycleFn<ExtraProps extends Record<string, any>> = (config:ExtraProps
