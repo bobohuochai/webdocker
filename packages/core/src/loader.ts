@@ -2,7 +2,7 @@ import { importEntry } from 'import-html-entry';
 import { concat, isFunction, mergeWith } from 'lodash';
 import { createSandboxContainer } from './sandbox/index';
 import {
-  LoadableApp, FrameworkConfiguration, AppLifeCycles, LifeCycleFn,
+  LoadableApp, FrameworkConfiguration, FrameworkLifeCycles, LifeCycleFn, AppLifecycles,
 } from './interface';
 import {
   Deferred, genAppInstanceIdByName, getDefaultTplWrapper, toArray,
@@ -74,7 +74,7 @@ function validateExportLifecycle(exports:any) {
   return isFunction(mount) && isFunction(unmount);
 }
 
-function getLifecyclesFromExports(scriptExports:any, appName:string) {
+function getLifecyclesFromExports(scriptExports:AppLifecycles<any>, appName:string) {
   if (validateExportLifecycle(scriptExports)) {
     return scriptExports;
   }
@@ -86,7 +86,7 @@ export async function loadApp<T>(
   app:LoadableApp<T>,
   // eslint-disable-next-line default-param-last
   config:FrameworkConfiguration = {},
-  lifeCycles?:Pick<AppLifeCycles<T>, 'beforeMount'|'beforeUnmount'|'beforeLoad'>,
+  lifeCycles?:FrameworkLifeCycles<T>,
 ) {
   const { container, name: appName, entry } = app;
   const appInstanceId = genAppInstanceIdByName(appName);
@@ -131,7 +131,7 @@ export async function loadApp<T>(
 
   await execHooksChain(toArray(beforeLoad), app, global);
 
-  const exportMicroApp:any = await execScripts(global, true);
+  const exportMicroApp:AppLifecycles<T> = await execScripts(global, true);
   console.log('export micro app', exportMicroApp);
   const { mount, unmount } = getLifecyclesFromExports(exportMicroApp, appName);
 
