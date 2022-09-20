@@ -30,3 +30,21 @@ export default {
 | manifest | object | 必填，{styles:string[],scripts:string[]}，子应用静态资源  |
 
 
+## Slots
+
+| slot | description |
+| ------ | --------------- |
+| loading | 自定义微应用加载中组件 |
+| error | 自定义微应用加载错误组件 |
+
+
+## Events
+
+| event | params | description |
+| ------ |---------| --------------- |
+| microAppDidMount| App:{ name: string; mount: () => Promise<void>; unmount: () => Promise<void>;} | 微应用加载完成事件 |
+| microAppDidCatch | Error | 微应用加载错误事件 |
+| microAppDidUnmount | App:同上 | 微应用卸载完成事件 |
+
+
+  

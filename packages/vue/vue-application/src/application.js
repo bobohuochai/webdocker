@@ -64,13 +64,14 @@ export default {
 
       this.app.mount();
       this.loading = false;
-      this.$emit('microAppDidMount');
+      this.$emit('microAppDidMount', this.app);
     });
   },
   beforeDestroy() {
     this.executeAction('unmount', () => {
       if (this.app) {
         this.app.unmount();
+        this.$emit('microAppDidUnmount', this.app);
       }
     });
     this.unmounted = true;
