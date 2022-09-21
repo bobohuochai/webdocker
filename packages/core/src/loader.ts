@@ -74,9 +74,28 @@ function validateExportLifecycle(exports:any) {
   return isFunction(mount) && isFunction(unmount);
 }
 
-function getLifecyclesFromExports(scriptExports:AppLifecycles<any>, appName:string) {
+function getLifecyclesFromExports(
+  scriptExports:AppLifecycles<any>,
+  appName:string,
+  global:WindowProxy,
+  globalLatestSetProp?: PropertyKey | null,
+) {
   if (validateExportLifecycle(scriptExports)) {
     return scriptExports;
+  }
+  // fallback to sandbox latest set property if it had
+  if (globalLatestSetProp) {
+    const lifecycles = (<any>global)[globalLatestSetProp];
+    if (validateExportLifecycle(lifecycles)) {
+      return lifecycles;
+    }
+  }
+
+  // fallback to global variable who named with ${appName} while module exports not found
+  const globalVariableExports = (global as any)[appName];
+
+  if (validateExportLifecycle(globalVariableExports)) {
+    return globalVariableExports;
   }
 
   throw new Error(`You need to export lifecycle functions in ${appName} entry`);
@@ -114,8 +133,9 @@ export async function loadApp<T>(
   let mountSandbox = () => Promise.resolve();
   let unmountSandbox = () => Promise.resolve();
   let global = globalContext;
+  let sandboxContainer;
   if (sandbox) {
-    const sandboxContainer = createSandboxContainer(appName);
+    sandboxContainer = createSandboxContainer(appName);
     mountSandbox = sandboxContainer.mount;
     unmountSandbox = sandboxContainer.unmount;
     // 用沙箱的代理对象作为接下来使用的全局对象
@@ -133,7 +153,12 @@ export async function loadApp<T>(
 
   const exportMicroApp:AppLifecycles<T> = await execScripts(global, true);
   console.log('export micro app', exportMicroApp);
-  const { mount, unmount } = getLifecyclesFromExports(exportMicroApp, appName);
+  const { mount, unmount } = getLifecyclesFromExports(
+    exportMicroApp,
+    appName,
+    global,
+    sandboxContainer?.instance?.latestSetProp,
+  );
 
   const mountFnGetter = () => {
     const mountFn = [

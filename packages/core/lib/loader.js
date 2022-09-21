@@ -53,28 +53,41 @@ function validateExportLifecycle(exports) {
     var _a = exports !== null && exports !== void 0 ? exports : {}, mount = _a.mount, unmount = _a.unmount;
     return isFunction(mount) && isFunction(unmount);
 }
-function getLifecyclesFromExports(scriptExports, appName) {
+function getLifecyclesFromExports(scriptExports, appName, global, globalLatestSetProp) {
     if (validateExportLifecycle(scriptExports)) {
         return scriptExports;
+    }
+    // fallback to sandbox latest set property if it had
+    if (globalLatestSetProp) {
+        var lifecycles = global[globalLatestSetProp];
+        if (validateExportLifecycle(lifecycles)) {
+            return lifecycles;
+        }
+    }
+    // fallback to global variable who named with ${appName} while module exports not found
+    var globalVariableExports = global[appName];
+    if (validateExportLifecycle(globalVariableExports)) {
+        return globalVariableExports;
     }
     throw new Error("You need to export lifecycle functions in ".concat(appName, " entry"));
 }
 export function loadApp(app, 
 // eslint-disable-next-line default-param-last
 config, lifeCycles) {
+    var _a;
     if (config === void 0) { config = {}; }
     return __awaiter(this, void 0, void 0, function () {
-        var container, appName, entry, appInstanceId, _a, sandbox, _b, globalContext, _c, execScripts, template, appContent, appElement, appWrapperGetter, mountSandbox, unmountSandbox, global, sandboxContainer, _d, _e, beforeLoad, _f, beforeMount, _g, beforeUnmount, exportMicroApp, _h, mount, unmount, mountFnGetter, unmountFnGetter;
+        var container, appName, entry, appInstanceId, _b, sandbox, _c, globalContext, _d, execScripts, template, appContent, appElement, appWrapperGetter, mountSandbox, unmountSandbox, global, sandboxContainer, _e, _f, beforeLoad, _g, beforeMount, _h, beforeUnmount, exportMicroApp, _j, mount, unmount, mountFnGetter, unmountFnGetter;
         var _this = this;
-        return __generator(this, function (_j) {
-            switch (_j.label) {
+        return __generator(this, function (_k) {
+            switch (_k.label) {
                 case 0:
                     container = app.container, appName = app.name, entry = app.entry;
                     appInstanceId = genAppInstanceIdByName(appName);
-                    _a = config.sandbox, sandbox = _a === void 0 ? true : _a, _b = config.globalContext, globalContext = _b === void 0 ? window : _b;
+                    _b = config.sandbox, sandbox = _b === void 0 ? true : _b, _c = config.globalContext, globalContext = _c === void 0 ? window : _c;
                     return [4 /*yield*/, importEntry(__assign({}, entry))];
                 case 1:
-                    _c = _j.sent(), execScripts = _c.execScripts, template = _c.template;
+                    _d = _k.sent(), execScripts = _d.execScripts, template = _d.template;
                     // as single-spa load and bootstrap new app parallel with other apps unmounting
                     // (see https://github.com/CanopyTax/single-spa/blob/master/src/navigation/reroute.js#L74)
                     // we need wait to load the app until all apps are finishing unmount in singular mode
@@ -83,7 +96,7 @@ config, lifeCycles) {
                     // as single-spa load and bootstrap new app parallel with other apps unmounting
                     // (see https://github.com/CanopyTax/single-spa/blob/master/src/navigation/reroute.js#L74)
                     // we need wait to load the app until all apps are finishing unmount in singular mode
-                    _j.sent();
+                    _k.sent();
                     appContent = getDefaultTplWrapper(appInstanceId)(template);
                     appElement = createElement(appContent, appInstanceId);
                     appWrapperGetter = getAppWrapperGetter(function () { return appElement; });
@@ -100,15 +113,15 @@ config, lifeCycles) {
                         // 用沙箱的代理对象作为接下来使用的全局对象
                         global = sandboxContainer.instance.proxy;
                     }
-                    _d = mergeWith({}, getAddons(global), lifeCycles, function (v1, v2) { return concat(v1 !== null && v1 !== void 0 ? v1 : [], v2 !== null && v2 !== void 0 ? v2 : []); }), _e = _d.beforeLoad, beforeLoad = _e === void 0 ? [] : _e, _f = _d.beforeMount, beforeMount = _f === void 0 ? [] : _f, _g = _d.beforeUnmount, beforeUnmount = _g === void 0 ? [] : _g;
+                    _e = mergeWith({}, getAddons(global), lifeCycles, function (v1, v2) { return concat(v1 !== null && v1 !== void 0 ? v1 : [], v2 !== null && v2 !== void 0 ? v2 : []); }), _f = _e.beforeLoad, beforeLoad = _f === void 0 ? [] : _f, _g = _e.beforeMount, beforeMount = _g === void 0 ? [] : _g, _h = _e.beforeUnmount, beforeUnmount = _h === void 0 ? [] : _h;
                     return [4 /*yield*/, execHooksChain(toArray(beforeLoad), app, global)];
                 case 3:
-                    _j.sent();
+                    _k.sent();
                     return [4 /*yield*/, execScripts(global, true)];
                 case 4:
-                    exportMicroApp = _j.sent();
+                    exportMicroApp = _k.sent();
                     console.log('export micro app', exportMicroApp);
-                    _h = getLifecyclesFromExports(exportMicroApp, appName), mount = _h.mount, unmount = _h.unmount;
+                    _j = getLifecyclesFromExports(exportMicroApp, appName, global, (_a = sandboxContainer === null || sandboxContainer === void 0 ? void 0 : sandboxContainer.instance) === null || _a === void 0 ? void 0 : _a.latestSetProp), mount = _j.mount, unmount = _j.unmount;
                     mountFnGetter = function () {
                         var mountFn = [
                             mountSandbox,
