@@ -151,10 +151,12 @@ export async function loadApp<T>(
 
   await execHooksChain(toArray(beforeLoad), app, global);
 
-  const exportMicroApp:AppLifecycles<T> = await execScripts(global, true);
+  const exportMicroApp = await execScripts(global, true).catch((err)=>{
+    console.warn(err)
+  });
   console.log('export micro app', exportMicroApp);
   const { mount, unmount } = getLifecyclesFromExports(
-    exportMicroApp,
+    exportMicroApp as AppLifecycles<T>,
     appName,
     global,
     sandboxContainer?.instance?.latestSetProp,

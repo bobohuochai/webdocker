@@ -36,6 +36,7 @@ var variableWhiteList = [
     '__cjsWrapper',
     // for react hot reload
     // see https://github.com/facebook/create-react-app/blob/66bf7dfc43350249e2f09d138a20840dae8a0a4a/packages/react-error-overlay/src/index.js#L180
+    // https://github.com/umijs/qiankun/issues/1804
     '__REACT_ERROR_OVERLAY_GLOBAL_HOOK__',
 ];
 // fakeWindow 和 rawWindow 相互独立的属性

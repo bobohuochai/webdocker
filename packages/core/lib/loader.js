@@ -117,7 +117,9 @@ config, lifeCycles) {
                     return [4 /*yield*/, execHooksChain(toArray(beforeLoad), app, global)];
                 case 3:
                     _k.sent();
-                    return [4 /*yield*/, execScripts(global, true)];
+                    return [4 /*yield*/, execScripts(global, true).catch(function (err) {
+                            console.warn(err);
+                        })];
                 case 4:
                     exportMicroApp = _k.sent();
                     console.log('export micro app', exportMicroApp);
