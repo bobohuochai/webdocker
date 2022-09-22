@@ -1,4 +1,22 @@
+<template>
+    <div v-if="!hasError" class="appliction-box" ref="el">
+      <slot v-if="$slots.loading" name="loading">
+      </slot>
+      <loading v-else is-full-page :active.sync="loading" color="#1fa0e8" background-color="#000" loader="bars"
+       />
+     </div>
+     <div v-else>
+        <slot v-if="$slots.error" name="error"></slot> 
+        <slot v-else >
+            <pre style="color:red">{{error.stack}}</pre>
+        </slot>
+     </div>
+</template>
+
+<script>
 import webdocker from '@webdocker/core';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 const getWrapProps = (props = {}) => {
   const wrapProps = { ...props, ...(props.appProps || {}) };
@@ -9,6 +27,7 @@ const getWrapProps = (props = {}) => {
 
 export default {
   name: 'Application',
+  components:{Loading},
   props: {
     name: {
       type: String,
@@ -34,24 +53,8 @@ export default {
       app: null,
       error: null,
       unmounted: false,
+      loader: null,
     };
-  },
-  render(h) {
-    if (this.hasError) {
-      if (this.$slots.error) {
-        return this.$slots.error;
-      }
-      return h('pre', { style: { color: 'red' } }, this.error.stack);
-    }
-    if (this.loading) {
-      if (this.$slots.loading) {
-        return this.$slots.loading;
-      }
-    }
-    return h('div', {
-      class: this.class,
-      ref: 'el',
-    });
   },
   async mounted() {
     this.executeAction('mount', async () => {
@@ -61,10 +64,10 @@ export default {
         name: this.name,
         entry: this.manifest,
       }, config, lifecycles);
-
       this.app.mount();
       this.loading = false;
       this.$emit('microAppDidMount', this.app);
+    
     });
   },
   beforeDestroy() {
@@ -87,16 +90,17 @@ export default {
           return;
         }
 
-        thing();
+       return thing()
       }).catch((err) => {
-        const error = new Error(`During '${action}',sub micro application threw an error:${err.message}`);
+        console.log('error====>',this)
+        const error = new Error(`During '${action}', micro application threw an error:${err.message}`);
+        this.error = error;
         this.hasError = true;
         this.loading = false;
-        this.error = error;
         this.$emit('microAppDidCatch', error);
         console.error(error);
       });
     },
-  },
-
+  }
 };
+</script>
