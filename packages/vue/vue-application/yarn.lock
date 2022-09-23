@@ -543,9 +543,9 @@ buffer-from@^1.0.0:
   integrity sha1-KxRqb9cugLT1XSVfNe1Zo6mkG9U=
 
 caniuse-lite@^1.0.30001400:
-  version "1.0.30001409"
-  resolved "http://npm.pingpongx.org/caniuse-lite/-/caniuse-lite-1.0.30001409.tgz#6135da9dcab34cd9761d9cdb12a68e6740c5e96e"
-  integrity sha512-V0mnJ5dwarmhYv8/MzhJ//aW68UpvnQBXv8lJ2QUsvn2pHcmAuNtu8hQEDz37XnA1iE+lRR9CIfGWWpgJ5QedQ==
+  version "1.0.30001410"
+  resolved "http://npm.pingpongx.org/caniuse-lite/-/caniuse-lite-1.0.30001410.tgz#b5a86366fbbf439d75dd3db1d21137a73e829f44"
+  integrity sha512-QoblBnuE+rG0lc3Ur9ltP5q47lbguipa/ncNMyyGuqPk44FxbScWAeEO+k5fSQ8WekdAK4mWqNs1rADDAiN5xQ==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -682,9 +682,9 @@ duplexer@^0.1.2:
   integrity sha1-Or5DrvODX4rgd9E23c4PJ2sEAOY=
 
 electron-to-chromium@^1.4.251:
-  version "1.4.257"
-  resolved "http://npm.pingpongx.org/electron-to-chromium/-/electron-to-chromium-1.4.257.tgz#895dc73c6bb58d1235dc80879ecbca0bcba96e2c"
-  integrity sha512-C65sIwHqNnPC2ADMfse/jWTtmhZMII+x6ADI9gENzrOiI7BpxmfKFE84WkIEl5wEg+7+SfIkwChDlsd1Erju2A==
+  version "1.4.258"
+  resolved "http://npm.pingpongx.org/electron-to-chromium/-/electron-to-chromium-1.4.258.tgz#44c5456f487be082f038282fbcfd7b06ae99720d"
+  integrity sha512-vutF4q0dTUXoAFI7Vbtdwen/BJVwPgj8GRg/SElOodfH7VTX+svUe62A5BG41QRQGk5HsZPB0M++KH1lAlOt0A==
 
 emojis-list@^3.0.0:
   version "3.0.0"

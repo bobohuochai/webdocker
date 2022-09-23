@@ -1,0 +1,24 @@
+{
+  "name": "@webdocker/vue-microapp-entry",
+  "version": "1.0.0",
+  "description": "vue",
+  "main": "lib/index.js",
+  "keywords": [
+    "vue",
+    "micro-app"
+  ],
+  "scripts": {
+    "build": "rm -rf lib && tsc"
+  },
+  "author": "xujun",
+  "license": "MIT",
+  "dependencies": {
+    "tslib": "^2.4.0"
+  },
+  "devDependencies": {
+    "vue": "~2.6"
+  },
+  "peerDependencies": {
+    "vue": "~2.6"
+  }
+}
