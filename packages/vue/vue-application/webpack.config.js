@@ -9,7 +9,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js',
+    filename: 'index.js',
     library: {
       type: 'module',
     },
@@ -21,7 +21,6 @@ module.exports = {
     extensions: ['.ts', '.js'],
   },
   mode: 'production',
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -32,21 +31,6 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.scss/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'css-loader',
-            options: {
-              modules: {
-                exportLocalsConvention: 'camelCase',
-              },
-            },
-          },
-          'sass-loader',
-        ],
       },
       {
         test: /\.css$/,
