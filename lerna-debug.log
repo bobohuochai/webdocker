@@ -1,9 +1,9 @@
-0 silly input [ 'build' ]
+0 silly input [ 'test' ]
 1 silly flags {
 1 silly flags   _: [ 'run' ],
 1 silly flags   'reject-cycles': false,
 1 silly flags   rejectCycles: false,
-1 silly flags   script: 'build',
+1 silly flags   script: 'test',
 1 silly flags   args: []
 1 silly flags }
 2 verbose rootPath /Users/xujun/Documents/codes/webDocker
@@ -12,14 +12,36 @@
 5 silly initialize attempt
 6 silly initialize success
 7 silly execute attempt
-8 silly runScriptInDir build [] core
+8 silly runScriptInDir test [] core
 9 silly getExecOpts { cwd: '/Users/xujun/Documents/codes/webDocker/packages/core' }
-10 error build Errored while running script in '@webdocker/core'
+10 error test Errored while running script in '@webdocker/core'
 11 error execute callback with error
-12 error Error: Command failed: yarn run build
-12 error error Command failed with exit code 2.
-12 error $ rm -rf lib && tsc -p tsconfig.build.json
-12 error src/loader.ts(154,9): error TS2322: Type 'unknown' is not assignable to type 'AppLifecycles<T>'.
+12 error Error: Command failed: yarn run test
+12 error ts-jest[versions] (WARN) Version 4.6.4 of typescript installed has not been tested with ts-jest. If you're experiencing issues, consider using a supported version (>=3.4.0 <4.0.0). Please do not report issues in ts-jest if you are using unsupported versions.
+12 error ts-jest[versions] (WARN) Version 4.6.4 of typescript installed has not been tested with ts-jest. If you're experiencing issues, consider using a supported version (>=3.4.0 <4.0.0). Please do not report issues in ts-jest if you are using unsupported versions.
+12 error ts-jest[versions] (WARN) Version 4.6.4 of typescript installed has not been tested with ts-jest. If you're experiencing issues, consider using a supported version (>=3.4.0 <4.0.0). Please do not report issues in ts-jest if you are using unsupported versions.
+12 error ts-jest[versions] (WARN) Version 4.6.4 of typescript installed has not been tested with ts-jest. If you're experiencing issues, consider using a supported version (>=3.4.0 <4.0.0). Please do not report issues in ts-jest if you are using unsupported versions.
+12 error ts-jest[versions] (WARN) Version 4.6.4 of typescript installed has not been tested with ts-jest. If you're experiencing issues, consider using a supported version (>=3.4.0 <4.0.0). Please do not report issues in ts-jest if you are using unsupported versions.
+12 error FAIL tests/patch.test.ts
+12 error   ● Test suite failed to run
+12 error
+12 error     [96mtests/patch.test.ts[0m:[93m2[0m:[93m1[0m - [91merror[0m[90m TS6133: [0m'loadApp' is declared but its value is never read.
+12 error
+12 error     [7m2[0m import { loadApp } from '../src/loader';
+12 error     [7m [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+12 error
+12 error PASS tests/util.test.ts
+12 error PASS tests/sandbox.common.test.ts
+12 error PASS tests/proxySandbox.test.ts
+12 error PASS tests/css.test.ts
+12 error
+12 error Test Suites: 1 failed, 4 passed, 5 total
+12 error Tests:       37 passed, 37 total
+12 error Snapshots:   0 total
+12 error Time:        3.044s
+12 error Ran all test suites.
+12 error error Command failed with exit code 1.
+12 error $ cross-env NODE_ENV=test jest
 12 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 12 error
 12 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11

@@ -15,7 +15,7 @@ export default microApp
 
 ## 注意
 
-微应用(vue2.x)使用Vue构造器启动，类似如下代码才可使用该包改造。
+微应用(vue2.x)使用Vue构造器启动才可使用该包改造。
 
 ```vue(2.x)
 
