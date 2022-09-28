@@ -52,7 +52,12 @@ function getAppWrapperGetter(
 ) {
   return () => {
     const element = elementGetter();
-    return element?.querySelector(`#${WebDockerSubAppContainerAttr}`);
+    if (!element) {
+      throw new Error('element not existed!');
+    }
+    const appElement = element.querySelector(`#${WebDockerSubAppContainerAttr}`) as HTMLElement;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return appElement!;
   };
 }
 
@@ -121,7 +126,6 @@ export async function loadApp<T>(
   // (see https://github.com/CanopyTax/single-spa/blob/master/src/navigation/reroute.js#L74)
   // we need wait to load the app until all apps are finishing unmount in singular mode
   await (prevAppUnmountedDeferred && prevAppUnmountedDeferred.promise);
-
   const appContent = getDefaultTplWrapper(appInstanceId)(template);
   const appElement = createElement(appContent, appInstanceId);
   const appWrapperGetter = getAppWrapperGetter(() => appElement);
@@ -135,7 +139,7 @@ export async function loadApp<T>(
   let global = globalContext;
   let sandboxContainer;
   if (sandbox) {
-    sandboxContainer = createSandboxContainer(appName);
+    sandboxContainer = createSandboxContainer(appName, () => appElement, global);
     mountSandbox = sandboxContainer.mount;
     unmountSandbox = sandboxContainer.unmount;
     // 用沙箱的代理对象作为接下来使用的全局对象
@@ -151,8 +155,8 @@ export async function loadApp<T>(
 
   await execHooksChain(toArray(beforeLoad), app, global);
 
-  const exportMicroApp = await execScripts(global, true).catch((err)=>{
-    console.warn(err)
+  const exportMicroApp = await execScripts(global, true).catch((err) => {
+    console.warn(err);
   });
   console.log('export micro app', exportMicroApp);
   const { mount, unmount } = getLifecyclesFromExports(

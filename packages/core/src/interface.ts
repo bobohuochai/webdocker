@@ -48,3 +48,10 @@ export type FrameworkConfiguration = {
   globalContext?:typeof window,
   sandbox?:boolean
 }
+
+export type ContainerConfig = {
+  appName: string;
+  proxy: WindowProxy;
+  dynamicStyleSheetElements: Array<HTMLStyleElement | HTMLLinkElement>;
+  appWrapperGetter: (...args:any[])=>any;
+};

@@ -16,8 +16,21 @@ export class Deferred<T> {
   }
 }
 
+export const webdokcerHeadTagName = 'webdocker-head';
+
 export function getDefaultTplWrapper(name: string) {
-  return (tpl: string) => `<div id="${name}" data-name="${name}">${tpl}</div>`;
+  return (tpl: string) => {
+    // HTMLHeadElement.appendChild 新增脚本时，占位符
+
+    let tplWithHead:string;
+    if (tpl.indexOf('<head>') !== -1) {
+      tplWithHead = tpl.replace('<head>', `<${webdokcerHeadTagName}>`)
+        .replace('</head>', `</${webdokcerHeadTagName}>`);
+    } else {
+      tplWithHead = `<${webdokcerHeadTagName}></${webdokcerHeadTagName}>${tpl}`;
+    }
+    return `<div id="${name}" data-name="${name}">${tplWithHead}</div>`;
+  };
 }
 
 // eslint-disable-next-line no-new-func
