@@ -9,6 +9,7 @@ import { execScripts } from 'import-html-entry';
 import { isFunction } from 'lodash';
 import { ContainerConfig } from '../../interface';
 import { webdokcerHeadTagName } from '../../utils';
+import * as css from '../../sandbox/css';
 
 const rawHeadAppendChild = HTMLHeadElement.prototype.appendChild;
 const rawBodyAppendChild = HTMLBodyElement.prototype.appendChild;
@@ -30,9 +31,9 @@ export function isExecutableScriptType(script:HTMLScriptElement) {
 
 export function isHijackingTag(tagName:string) {
   return (
-    tagName.toUpperCase() === SCRIPT_TAG_NAME
-        || tagName.toUpperCase() === LINK_TAG_NAME
-        || tagName.toUpperCase() === STYLE_TAG_NAME
+    tagName?.toUpperCase() === SCRIPT_TAG_NAME
+        || tagName?.toUpperCase() === LINK_TAG_NAME
+        || tagName?.toUpperCase() === STYLE_TAG_NAME
   );
 }
 
@@ -76,12 +77,32 @@ function manualInvokeElementOnError(element:HTMLLinkElement | HTMLScriptElement)
   }
 }
 
+function convertLinkAsStyle(
+  element:HTMLLinkElement,
+  postProcess:(styleElement:HTMLStyleElement)=>void,
+) {
+  const styleElement = document.createElement('style');
+  const { href } = element;
+  styleElement.dataset.webdockerhref = href;
+  // todo fetch 兼容
+  window.fetch(href)
+    .then((res:any) => res.text())
+    .then((styleContext:string) => {
+      styleElement.appendChild(document.createTextNode(styleContext));
+      postProcess(styleElement);
+      manualInvokeElementOnLoad(element);
+    })
+    .catch(() => manualInvokeElementOnError(element));
+  return styleElement;
+}
+
 const dynamicScriptAttachedCommentMap = new Map<HTMLScriptElement, Comment>();
+const dynamicLinkAttachedInlineStyleMap = new Map<HTMLLinkElement, HTMLStyleElement>();
 
 function getOverwrittenAppendChildOrInsertBefore(opts:{
   rawDOMAppendOrInsertBefore:<T extends Node>(newChild: T, refChild?: Node | null) => T;
   isInvokedByMicroApp:(element:HTMLElement) =>boolean;
-  containerConfigGetter:(element:HTMLElement)=>ContainerConfig;
+  containerConfigGetter:(element:HTMLElement)=>ContainerConfig|undefined;
   target:DynamicDomMutationTarget;
 }) {
   return function appendChildOrInsertBefore<T extends Node>(
@@ -93,18 +114,44 @@ function getOverwrittenAppendChildOrInsertBefore(opts:{
     const {
       rawDOMAppendOrInsertBefore, isInvokedByMicroApp, containerConfigGetter, target = 'body',
     } = opts;
-    if (!isHijackingTag(element.tagName) || !isInvokedByMicroApp(element)) {
+    const containerConfig = containerConfigGetter(element);
+    if (!isHijackingTag(element.tagName) || !isInvokedByMicroApp(element) || !containerConfig) {
       return rawDOMAppendOrInsertBefore.call(this, element, refChild);
     }
     if (element.tagName) {
-      const containerConfig = containerConfigGetter(element);
       const {
-        appWrapperGetter, proxy,
+        appWrapperGetter, proxy, appName,
       } = containerConfig;
 
       switch (element.tagName) {
+        case LINK_TAG_NAME:
+        case STYLE_TAG_NAME: {
+          console.log('style element overwrite====>', element, window.location.pathname, document);
+          let stylesheetElement:HTMLLinkElement |HTMLStyleElement = newChild as any;
+          const appWrapper = appWrapperGetter();
+          // 排除<link ref="icon" href="favicon.icon">
+          const linkElementUsingStylesheet = element.tagName.toUpperCase() === LINK_TAG_NAME
+          && (element as HTMLLinkElement).rel === 'stylesheet'
+          && (element as HTMLLinkElement).href;
+          if (linkElementUsingStylesheet) {
+            stylesheetElement = convertLinkAsStyle(
+              element,
+              (styleElement) => css.process(appWrapper, styleElement, appName),
+            );
+            dynamicLinkAttachedInlineStyleMap.set(element, stylesheetElement);
+          } else {
+            css.process(appWrapper, stylesheetElement, appName);
+          }
+          const mountDOM = target === 'head' ? getAppWrapperHeadElement(appWrapper) : appWrapper;
+          const referenceNode = mountDOM.contains(refChild) ? refChild : null;
+          return rawDOMAppendOrInsertBefore.call(mountDOM, stylesheetElement, referenceNode);
+        }
         case SCRIPT_TAG_NAME: {
+          console.log('script element overwrite====>', element, window.location.pathname, document);
           const { src, text } = element;
+          if (!isExecutableScriptType(element)) {
+            return rawDOMAppendOrInsertBefore.call(this, element, refChild);
+          }
           const appWrapper = appWrapperGetter();
           const mountDOM = target === 'head' ? getAppWrapperHeadElement(appWrapper) : appWrapper;
           const referenceNode = mountDOM.contains(refChild) ? refChild : null;
@@ -162,10 +209,18 @@ function getNewRemoveChild(
 ) {
   return function removeChild<T extends Node>(this:HTMLHeadElement | HTMLBodyElement, child:T) {
     const { tagName } = child as any;
-    if (!isHijackingTag(tagName)) return rawHeadOrBodyRemoveChild.call(this, child) as T;
+    const containerConfig = containerConfigGetter(child as any);
+    if (!isHijackingTag(tagName) || !containerConfig) return rawHeadOrBodyRemoveChild.call(this, child) as T;
     let attachedElement:Node;
-    const { appWrapperGetter } = containerConfigGetter(child as any);
+
+    const { appWrapperGetter } = containerConfig;
     switch (tagName) {
+      case STYLE_TAG_NAME:
+      case LINK_TAG_NAME:
+        attachedElement = dynamicLinkAttachedInlineStyleMap.get(child as any) || child;
+
+        // todo style-component
+        break;
       case SCRIPT_TAG_NAME: {
         attachedElement = dynamicScriptAttachedCommentMap.get(child as any) || child;
         break;

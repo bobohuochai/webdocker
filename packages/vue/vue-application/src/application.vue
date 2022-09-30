@@ -102,7 +102,6 @@ export default {
           return thing()
         })
         .catch((err) => {
-          console.log('error====>', this)
           const error = new Error(
             `During '${action}', micro application threw an error:${err.message}`
           )

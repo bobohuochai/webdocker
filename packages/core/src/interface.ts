@@ -46,7 +46,8 @@ export type AppLifecycles<ExtraProps> = {
 
 export type FrameworkConfiguration = {
   globalContext?:typeof window,
-  sandbox?:boolean
+  sandbox?:boolean,
+  dynamicPatch?:boolean
 }
 
 export type ContainerConfig = {

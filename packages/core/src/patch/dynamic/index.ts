@@ -1,1 +1,1 @@
-export { patchLooseSandbox } from './forLooseSandbox';
+export { patchLooseSandbox } from './sandbox';

@@ -23,8 +23,7 @@
 14 error Error: Command failed: yarn run build
 14 error error Command failed with exit code 2.
 14 error $ rm -rf lib && tsc -p tsconfig.build.json
-14 error src/sandbox/css.ts(1,21): error TS2307: Cannot find module 'postcss' or its corresponding type declarations.
-14 error src/sandbox/css.ts(2,32): error TS2307: Cannot find module 'postcss' or its corresponding type declarations.
+14 error src/patch/dynamic/sandbox.ts(2,46): error TS6133: 'AppInstance' is declared but its value is never read.
 14 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 14 error
 14 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11

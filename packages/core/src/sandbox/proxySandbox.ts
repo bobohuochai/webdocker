@@ -1,5 +1,6 @@
 import { SandBox, WindowProxy } from '../interface';
 import { getTargetValue } from '../common';
+import { getCurrentRunningApp, setCurrentRunningApp, nextTask } from '../utils';
 
 type FakeWindow = Window & Record<PropertyKey, any>;
 type SymbolTarget = 'target' | 'globalContext';
@@ -123,6 +124,21 @@ export default class ProxySandbox implements SandBox {
     this.sandboxRunning = false;
   }
 
+  registerRunningApp(name: string, proxy: Window) {
+    if (this.sandboxRunning) {
+      const currentRunningApp = getCurrentRunningApp();
+      if (!currentRunningApp || currentRunningApp.name !== name) {
+        setCurrentRunningApp({ name, window: proxy });
+      }
+      // FIXME if you have any other good ideas
+      // remove the mark in next tick, thus we can identify whether it in micro app or not
+      // this approach is just a workaround, it could not cover all complex cases, such as the micro app runs in the same task context with master in some case
+      nextTask(() => {
+        setCurrentRunningApp(null);
+      });
+    }
+  }
+
   constructor(name:string, globalContext = window) {
     this.name = name;
     const { updatedValueSet } = this;
@@ -136,6 +152,7 @@ export default class ProxySandbox implements SandBox {
     const proxy = new Proxy(fakeWindow, {
       set: (target: FakeWindow, p: PropertyKey, value: any): boolean => {
         if (this.sandboxRunning) {
+          this.registerRunningApp(name, proxy);
           // 判断window上有该属性，并获取到属性的 writable, configurable, enumerable等值。
           if (!target.hasOwnProperty(p) && globalContext.hasOwnProperty(p)) {
             const descriptor = Object.getOwnPropertyDescriptor(globalContext, p);
@@ -170,7 +187,8 @@ export default class ProxySandbox implements SandBox {
         // 在 strict-mode 下，Proxy 的 handler.set 返回 false 会抛出 TypeError，在沙箱卸载的情况下应该忽略错误
         return true;
       },
-      get(target: FakeWindow, p: PropertyKey): any {
+      get: (target: FakeWindow, p: PropertyKey): any => {
+        this.registerRunningApp(name, proxy);
         // todo Vue ，browerCollector 和宿主应用独立
         if (variableBlackList.indexOf(p) !== -1) return target[p];
         if (p === Symbol.unscopables) return unscopables;
@@ -266,6 +284,7 @@ export default class ProxySandbox implements SandBox {
       },
 
       deleteProperty: (target: FakeWindow, p: string | number | symbol): boolean => {
+        this.registerRunningApp(name, proxy);
         if (target.hasOwnProperty(p)) {
           // eslint-disable-next-line no-param-reassign
           delete target[p];

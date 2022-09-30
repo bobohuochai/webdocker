@@ -1,5 +1,37 @@
 import { once } from 'lodash';
 
+export type AppInstance = {name:string, window:WindowProxy};
+let currentRunningApp:AppInstance| null = null;
+
+/**
+ * get the app that running tasks at current tick
+ */
+export function getCurrentRunningApp() {
+  return currentRunningApp;
+}
+
+export function setCurrentRunningApp(appInstance:AppInstance | null) {
+  // set currentRunningApp and it's proxySandbox to global window, as its only use case is for document.createElement from now on, which hijacked by a global way
+  currentRunningApp = appInstance;
+}
+
+let globalTaskPending = false;
+
+/**
+ * Run a callback before next task executing, and the invocation is idempotent in every singular task
+ * That means even we called nextTask multi times in one task, only the first callback will be pushed to nextTick to be invoked.
+ * @param cb
+ */
+export function nextTask(cb: () => void): void {
+  if (!globalTaskPending) {
+    globalTaskPending = true;
+    Promise.resolve().then(() => {
+      cb();
+      globalTaskPending = false;
+    });
+  }
+}
+
 export class Deferred<T> {
   promise:Promise<T>;
 

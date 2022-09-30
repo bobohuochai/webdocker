@@ -139,7 +139,7 @@ export async function loadApp<T>(
   let global = globalContext;
   let sandboxContainer;
   if (sandbox) {
-    sandboxContainer = createSandboxContainer(appName, () => appElement, global);
+    sandboxContainer = createSandboxContainer(appInstanceId, () => appElement, global);
     mountSandbox = sandboxContainer.mount;
     unmountSandbox = sandboxContainer.unmount;
     // 用沙箱的代理对象作为接下来使用的全局对象

@@ -22,6 +22,7 @@ enum RuleType {
   KEYFRAME = 8,
 }
 
+// https://github.com/umijs/qiankun/issues/2116
 // eslint-disable-next-line no-inner-declarations
 function travser(nodes: ChildNode[]) {
   return nodes.reduce((ruleList, item) => {
@@ -95,7 +96,6 @@ export class ScopedCSS {
     if (styleNode.textContent !== '') {
       const textNode = document.createTextNode(styleNode.textContent || '');
       this.swapNode.appendChild(textNode);
-      // https://github.com/umijs/qiankun/issues/2116
       const rules = arrayify<CSSRule>(parseRulePostCss(textNode.textContent || '') ?? []);
       const css = this.rewrite(rules, prefix);
       // eslint-disable-next-line no-param-reassign
