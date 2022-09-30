@@ -109,7 +109,7 @@ function getLifecyclesFromExports(
 export async function loadApp<T>(
   app:LoadableApp<T>,
   // eslint-disable-next-line default-param-last
-  config:FrameworkConfiguration = {},
+  config:FrameworkConfiguration = { dynamicPatch: true },
   lifeCycles?:FrameworkLifecycles<T>,
 ) {
   const { container, name: appName, entry } = app;
@@ -139,7 +139,7 @@ export async function loadApp<T>(
   let global = globalContext;
   let sandboxContainer;
   if (sandbox) {
-    sandboxContainer = createSandboxContainer(appInstanceId, () => appElement, global);
+    sandboxContainer = createSandboxContainer(appInstanceId, () => appElement, config, global);
     mountSandbox = sandboxContainer.mount;
     unmountSandbox = sandboxContainer.unmount;
     // 用沙箱的代理对象作为接下来使用的全局对象

@@ -58,13 +58,11 @@ function patchDocumentCreateElement() {
 let mountingPatchCount = 0;
 
 /**
- * todo dynamic style element process
- *
  * Just hijack dynamic head append, that could avoid accidentally hijacking the insertion of elements except in head.
  * Such a case: ReactDOM.createPortal(<style>.test{color:blue}</style>, container),
  * this could made we append the style element into app wrapper but it will cause an error while the react portal unmounting, as ReactDOM could not find the style in body children list.
  */
-export function patchLooseSandbox(
+export function patchSandbox(
   appName:string,
   appWrapperGetter:()=>HTMLElement,
   proxy:Window,
