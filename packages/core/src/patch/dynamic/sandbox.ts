@@ -30,6 +30,7 @@ function patchDocumentCreateElement() {
         if (currentRunningApp) {
           currentRunningSandboxProxy = currentRunningApp.window;
         }
+        // FIXME 判断是否离开微应用生命周期
         if (currentRunningSandboxProxy) {
           const proxyContainerConfig = proxyAttachContainerConfigMap.get(currentRunningSandboxProxy);
           if (proxyContainerConfig) {
@@ -55,7 +56,25 @@ function patchDocumentCreateElement() {
   };
 }
 
-let mountingPatchCount = 0;
+const appsPatchCounter = new Map<string, number>();
+
+function calcAppCounter(appName:string, calcType:'increase'|'decrease') {
+  let appCounter = appsPatchCounter.get(appName) || 0;
+  switch (calcType) {
+    case 'increase':
+      appCounter++;
+      break;
+    case 'decrease':
+      if (appCounter > 0) {
+        console.log('test', appName, appCounter);
+        appCounter--;
+      }
+      break;
+    default:
+      break;
+  }
+  appsPatchCounter.set(appName, appCounter);
+}
 
 /**
  * Just hijack dynamic head append, that could avoid accidentally hijacking the insertion of elements except in head.
@@ -90,11 +109,11 @@ export function patchSandbox(
     }),
   );
   // todo bootstrap patch
-  if (mounting) mountingPatchCount++;
+  if (mounting) calcAppCounter(appName, 'increase');
 
   return function free() {
-    if (mounting) mountingPatchCount--;
-    const allMicroAppUnmounted = mountingPatchCount === 0;
+    if (mounting) calcAppCounter(appName, 'decrease');
+    const allMicroAppUnmounted = Array.from(appsPatchCounter.entries()).every(([, counter]) => counter === 0);
     if (allMicroAppUnmounted) {
       unpatchDynamicAppendPrototypeFunctions();
       unpatchDocumentCreate();
