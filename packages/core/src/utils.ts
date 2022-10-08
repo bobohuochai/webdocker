@@ -32,6 +32,10 @@ export function nextTask(cb: () => void): void {
   }
 }
 
+export function sleep(ms:number) {
+  return new Promise((resolve) => { setTimeout(resolve, ms); });
+}
+
 export class Deferred<T> {
   promise:Promise<T>;
 

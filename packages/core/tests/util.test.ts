@@ -1,5 +1,6 @@
 import {
   genAppInstanceIdByName, Deferred, getDefaultTplWrapper, toArray,
+  nextTask, sleep,
 } from '../src/utils';
 
 test('should genAppInstanceIdByName works well', () => {
@@ -26,7 +27,7 @@ test('should getDefaultTplWrapper works well', () => {
   const tpl = '<div>webdocker</div>';
   const factory = getDefaultTplWrapper('name1');
   const ret = factory(tpl);
-  expect(ret).toBe('<div id="name1" data-name="name1"><div>webdocker</div></div>');
+  expect(ret).toBe('<div id="name1" data-name="name1"><webdocker-head></webdocker-head><div>webdocker</div></div>');
 });
 
 test('should toArray works well', () => {
@@ -34,4 +35,18 @@ test('should toArray works well', () => {
   expect(retNoArr).toEqual([1]);
   const retArr = toArray([1]);
   expect(retArr).toEqual([1]);
+});
+
+test('nextTask should works well', async () => {
+  let counter = 0;
+  nextTask(() => ++counter);
+  nextTask(() => ++counter);
+  nextTask(() => ++counter);
+  await sleep(0);
+  expect(counter).toBe(1);
+  nextTask(() => ++counter);
+  await sleep(0);
+  nextTask(() => ++counter);
+  await sleep(0);
+  expect(counter).toBe(3);
 });
