@@ -6,6 +6,8 @@ declare global {
 }
 export type WindowProxy = Window
 
+export type DocumentProxy = Document
+
 export type SandBox = {
   /** 沙箱的名字 */
   name: string;
