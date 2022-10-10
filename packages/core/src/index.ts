@@ -1,7 +1,10 @@
 import { loadApp } from './loader';
+import { prefetchApps } from './prefetch';
 
-export default {
-  loadApp,
-};
+export { loadApp } from './loader';
+
+export { prefetchApps } from './prefetch';
 
 export * from './interface';
+
+export default { loadApp, prefetchApps };

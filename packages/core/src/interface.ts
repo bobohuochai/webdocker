@@ -1,3 +1,5 @@
+import type { Entry } from 'import-html-entry';
+
 declare global {
   interface Window {
     __POWERED_BY_WEBDOCKER__?: boolean;
@@ -28,6 +30,11 @@ export interface LoadableApp<T extends Record<string, any>> {
   entry:{ styles?: string[], scripts?: string[], html?: string };
   container:string | HTMLElement,
   props?:T
+}
+
+export type AppConfig = {
+  name:string,
+  entry:Entry
 }
 
 export type LifecycleFn<T extends Record<string, any>> = (app?:LoadableApp<T>, global?:typeof window)=>Promise<any>
