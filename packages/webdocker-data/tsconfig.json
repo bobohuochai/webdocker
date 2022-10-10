@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "experimentalDecorators": true,
+      "declaration": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "lib"
+    },
+    "exclude": ["node_modules"]
+  }
+  
