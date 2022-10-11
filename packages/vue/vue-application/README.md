@@ -2,7 +2,7 @@
 宿主应用（Vue 2.x)使用@webdocker框架接入微应用
 
 ## How to use
-```vue(2.x)
+```vue
 <template>
     <Application
         name=""
