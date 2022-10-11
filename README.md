@@ -5,13 +5,13 @@
 
 ## Getting Started
 
-### 安装
+### Install
 
 ```bash
 npm install @webdocker/core 
 ```
 
-### 宿主应用
+### Main application
 
 ```vue
 <template>
@@ -45,9 +45,9 @@ export default  {
 ```
 
 
-### 微应用
+### Micro app
 
-sub-application should export lifecycles(umd) ways.
+Micro app should export lifecycles(umd) ways.
 
 ```javascript
 import React from 'react'
@@ -106,7 +106,7 @@ module.exports = {
 ```
 
 
-## 感谢
+## Thanks
 
 [qiankun](https://github.com/umijs/qiankun)
 
