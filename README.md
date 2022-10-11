@@ -28,8 +28,8 @@ export default  {
     },
    async mounted(){
        this.app =await webDocker.loadApp({name:'LightYear',container:'#lightyear-container',entry:{
-            scripts:[`https://dev-cdn17.pingpongx.com/lightyear_file/22.8.4.4.1/my-lib.umd.js`],
-            styles:[ `https://dev-cdn17.pingpongx.com/lightyear_file/22.8.4.4.1/my-lib.css`]
+            scripts:[`microapp js url`],
+            styles:[ `microapp css url`]
         }})
        this.app.mount()
     },
@@ -53,7 +53,6 @@ Micro app should export lifecycles(umd) ways.
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { unmountComponentAtNode } from 'react-dom'
-import 'antd/dist/antd.css'
 import { ConfigProvider } from 'antd'
 import zhCN from 'antd/lib/locale/zh_CN'
 import addModalWrapper from '@/components/hoc/addModalWrapper'
