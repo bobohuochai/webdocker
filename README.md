@@ -1,17 +1,17 @@
 
 # webdocker
 
-> Micro Frontends solution for large application.
+> 微前端解决方案
 
-## Getting Started
+## 开始使用
 
-### Install
+### 安装
 
 ```bash
 npm install @webdocker/core 
 ```
 
-### Main application
+### 宿主应用
 
 ```vue
 <template>
@@ -45,9 +45,9 @@ export default  {
 ```
 
 
-### Micro app
+### 微应用
 
-Micro app should export lifecycles(umd) ways.
+微应用应该以umd的方式导出生命周期对象。
 
 ```javascript
 import React from 'react'
@@ -93,7 +93,7 @@ export default microExportInfo
 
 ```
 
-Micro app should be bundled as an UMD module, add the following configuration of webpack:
+微应用应该打包成UMD模块，添加webpack 如下配置：
 
 ```javascript
 module.exports = {
@@ -104,7 +104,7 @@ module.exports = {
 };
 ```
 
-## why
+## 原因
 
 为什么市面上有这么多微前端框架了，还要自己造一遍轮子。
 
@@ -123,7 +123,7 @@ module.exports = {
   
 
 
-## Thanks
+## 感谢
 
 [qiankun](https://github.com/umijs/qiankun)
 
