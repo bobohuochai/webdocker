@@ -1,4 +1,4 @@
-import { event } from '../src/index';
+import { event, store } from '../src/index';
 
 describe('event', () => {
   test('event should work well', () => {
@@ -12,5 +12,18 @@ describe('event', () => {
     expect(eventFunction).toBeCalledWith('testData');
     event.off(eventKey, eventFunction);
     expect(event.has(eventKey)).toBe(false);
+  });
+});
+
+describe('store', () => {
+  test('store should work well', () => {
+    const storeKey = 'testStore';
+    const storeValue = 'testValue';
+    const storeFunc = jest.fn();
+    store.on(storeKey, storeFunc);
+    store.set(storeKey, storeValue);
+    expect(store.get(storeKey)).toBe(storeValue);
+    expect(storeFunc).toBeCalledTimes(1);
+    expect(storeFunc).toBeCalledWith(storeValue);
   });
 });
