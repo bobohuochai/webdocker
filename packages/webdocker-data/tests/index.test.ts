@@ -25,5 +25,8 @@ describe('store', () => {
     expect(store.get(storeKey)).toBe(storeValue);
     expect(storeFunc).toBeCalledTimes(1);
     expect(storeFunc).toBeCalledWith(storeValue);
+    expect(store.has(storeKey)).toBe(true);
+    store.off(storeKey, storeFunc);
+    expect(store.has(storeKey)).toBe(false);
   });
 });

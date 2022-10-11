@@ -5,7 +5,7 @@ export const getCache = (key:string):any => {
   return webdocker && webdocker[key] ? webdocker[key] : null;
 };
 
-export const setCache = (key:string, value:any):void => {
+export const setCache = <T>(key:string, value:T):void => {
   if (!window[namespace]) {
     window[namespace] = {};
   }

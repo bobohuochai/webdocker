@@ -48,10 +48,10 @@ class Event implements EventEmitter {
   }
 }
 
-let event = getCache(eventCacheKey);
+let event:Event = getCache(eventCacheKey);
 
 if (!event) {
   event = new Event();
-  setCache(eventCacheKey, event);
+  setCache<Event>(eventCacheKey, event);
 }
 export default event;

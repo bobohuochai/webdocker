@@ -71,11 +71,11 @@ class Store implements IO {
   }
 }
 
-let store = getCache(storeCacheKey);
+let store:Store = getCache(storeCacheKey);
 
 if (!store) {
   store = new Store();
-  setCache(storeCacheKey, store);
+  setCache<Store>(storeCacheKey, store);
 }
 
 export default store;
