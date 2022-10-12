@@ -18,12 +18,17 @@
 9 silly getExecOpts }
 10 silly runScriptInDir build [] core
 11 silly getExecOpts { cwd: '/Users/xujun/Documents/codes/webDocker/packages/core' }
-12 error build Errored while running script in '@webdocker/core'
-13 error execute callback with error
-14 error Error: Command failed: yarn run build
-14 error error Command failed with exit code 2.
-14 error $ rm -rf lib && tsc -p tsconfig.build.json
-14 error src/patch/dynamic/sandbox.ts(17,10): error TS6133: 'patchDocumentCreateElement' is declared but its value is never read.
-14 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-14 error
-14 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11
+12 silly runScriptInDir build [] webdocker-data
+13 silly getExecOpts {
+13 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/webdocker-data'
+13 silly getExecOpts }
+14 error build Errored while running script in '@webdocker/core'
+15 error execute callback with error
+16 error Error: Command failed: yarn run build
+16 error error Command failed with exit code 2.
+16 error $ rm -rf lib && tsc -p tsconfig.build.json
+16 error src/sandbox/css.ts(1,21): error TS2307: Cannot find module 'postcss' or its corresponding type declarations.
+16 error src/sandbox/css.ts(2,32): error TS2307: Cannot find module 'postcss' or its corresponding type declarations.
+16 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+16 error
+16 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11
