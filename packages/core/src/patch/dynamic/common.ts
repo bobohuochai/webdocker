@@ -10,6 +10,7 @@ import { isFunction } from 'lodash';
 import { ContainerConfig } from '../../interface';
 import { webdokcerHeadTagName } from '../../utils';
 import * as css from '../../sandbox/css';
+import { lexicalGlobals } from '../../common';
 
 const rawHeadAppendChild = HTMLHeadElement.prototype.appendChild;
 const rawBodyAppendChild = HTMLBodyElement.prototype.appendChild;
@@ -155,10 +156,14 @@ function getOverwrittenAppendChildOrInsertBefore(opts:{
           const appWrapper = appWrapperGetter();
           const mountDOM = target === 'head' ? getAppWrapperHeadElement(appWrapper) : appWrapper;
           const referenceNode = mountDOM.contains(refChild) ? refChild : null;
+
+          // https://github.com/umijs/qiankun/issues/1175
+          const scopedGlobalVariables = lexicalGlobals;
           if (src) {
             execScripts(null, [src], proxy, {
               fetch: window.fetch,
               strictGlobal: true,
+              scopedGlobalVariables,
               beforeExec: () => {
                 const isCurrentScriptConfigurable = () => {
                   const descriptor = Object.getOwnPropertyDescriptor(document, 'currentScript');

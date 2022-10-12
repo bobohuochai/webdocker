@@ -1736,10 +1736,10 @@ iconv-lite@0.4.24:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
-import-html-entry@^1.12.0:
-  version "1.12.0"
-  resolved "http://npm.pingpongx.org/import-html-entry/-/import-html-entry-1.12.0.tgz#460dff3cd86a9774f2ae9fc44bdce3577d30a235"
-  integrity sha512-wloMEMwupKJ8DWvKsEzJTXhHVieEH8ylu9ebeQg7T9JUsPTo0Zwa1EkuSKgKJvOiA2MxAFkeYYvd/E2pKiFtWQ==
+import-html-entry@^1.14.0:
+  version "1.14.0"
+  resolved "http://npm.pingpongx.org/import-html-entry/-/import-html-entry-1.14.0.tgz#9a05928373bb7e9362cd8dd428a82387a87524ff"
+  integrity sha512-CQQMV+2rxHCLMSXsajV1cjT1g6xi3ujMAPnGwR96xHaN5/JEVIOUGkM7LDRn73dk8E8NaHmOf3rvPPExPPe1xw==
   dependencies:
     "@babel/runtime" "^7.7.2"
 

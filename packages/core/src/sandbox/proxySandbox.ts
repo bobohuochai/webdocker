@@ -1,37 +1,16 @@
 import { SandBox, WindowProxy } from '../interface';
-import { getTargetValue } from '../common';
+import { getTargetValue, unscopedGlobals } from '../common';
 import { createContext } from './context';
 
 type FakeWindow = Window & Record<PropertyKey, any>;
 type SymbolTarget = 'target' | 'globalContext';
 
 /*
- variables who are impossible to be overwrite need to be escaped from proxy sandbox for performance reasons
+ variables who are impossible to be overwritten need to be escaped from proxy sandbox for performance reasons
+ see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/unscopables
  */
-const unscopables = {
-  undefined: true,
-  Array: true,
-  Object: true,
-  String: true,
-  Boolean: true,
-  Math: true,
-  Number: true,
-  Symbol: true,
-  parseFloat: true,
-  Float32Array: true,
-  isNaN: true,
-  Infinity: true,
-  Reflect: true,
-  Float64Array: true,
-  Function: true,
-  Map: true,
-  NaN: true,
-  Promise: true,
-  Proxy: true,
-  Set: true,
-  parseInt: true,
-  requestAnimationFrame: true,
-};
+const unscopables = unscopedGlobals
+  .reduce((previousValue, currentValue) => ({ ...previousValue, [currentValue]: true }), { __proto__: null });
 
 // 直接修改window 对象
 const variableWhiteList: PropertyKey[] = [
@@ -50,7 +29,7 @@ const variableWhiteList: PropertyKey[] = [
 ];
 
 // fakeWindow 和 rawWindow 相互独立的属性
-// 微应用中类似写法window.Vue直接读取fakeWindow,不会读取rawWindow
+// 微应用中类似写法window.Vue直接读取sandbox,不会读取globalContext
 const variableBlackList:PropertyKey[] = ['Vue', 'browerCollector'];
 /**
  * fastest(at most time) unique array method
@@ -65,6 +44,11 @@ function uniq(array: Array<string | symbol>) {
 function createFakeWindow(global:Window) {
   const propertiesWithGetter = new Map<PropertyKey, boolean>();
   const fakeWindow = {} as FakeWindow;
+  /*
+   copy the non-configurable property of global to fakeWindow
+   see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/getOwnPropertyDescriptor
+   > A property cannot be reported as non-configurable, if it does not exist as an own property of the target object or if it exists as a configurable own property of the target object.
+   */
   Object.getOwnPropertyNames(global).filter((p) => {
     const descriptor = Object.getOwnPropertyDescriptor(global, p);
     return !descriptor?.configurable;
