@@ -102,3 +102,34 @@ export const genAppInstanceIdByName = (appName: string): string => {
 export function toArray<T>(array:T | T[]) :T[] {
   return Array.isArray(array) ? array : [array];
 }
+
+/**
+ * isPropertyReadonly
+ * @param target
+ * @param p
+ * @returns boolean
+ */
+const frozenPropertyCacheMap = new WeakMap<any, Record<PropertyKey, boolean>>();
+export function isPropertyFrozen(target: any, p?: PropertyKey): boolean {
+  if (!target || !p) {
+    return false;
+  }
+
+  const targetPropertiesFromCache = frozenPropertyCacheMap.get(target) || {};
+
+  if (targetPropertiesFromCache[p]) {
+    return targetPropertiesFromCache[p];
+  }
+
+  const propertyDescriptor = Object.getOwnPropertyDescriptor(target, p);
+  const frozen = Boolean(
+    propertyDescriptor
+       && propertyDescriptor.configurable === false
+       && (propertyDescriptor.writable === false || (propertyDescriptor.get && !propertyDescriptor.set)),
+  );
+
+  targetPropertiesFromCache[p] = frozen;
+  frozenPropertyCacheMap.set(target, targetPropertiesFromCache);
+
+  return frozen;
+}

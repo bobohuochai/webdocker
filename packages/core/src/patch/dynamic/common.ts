@@ -158,6 +158,7 @@ function getOverwrittenAppendChildOrInsertBefore(opts:{
           const referenceNode = mountDOM.contains(refChild) ? refChild : null;
 
           // https://github.com/umijs/qiankun/issues/1175
+          // https://hijiangtao.github.io/2022/06/11/JavaScript-Sandbox-Mechanism-and-Its-History/
           const scopedGlobalVariables = lexicalGlobals;
           if (src) {
             execScripts(null, [src], proxy, {
@@ -193,7 +194,7 @@ function getOverwrittenAppendChildOrInsertBefore(opts:{
           }
 
           // 内联脚本处理, 内联脚本不会触发onload，onerror event
-          execScripts(null, [`<script>${text}</script>`], proxy, { strictGlobal: true });
+          execScripts(null, [`<script>${text}</script>`], proxy, { strictGlobal: true, scopedGlobalVariables });
           const dynamicInlineScriptCommentElement = document.createComment('dynamic inline script replaced by webdocker');
           dynamicScriptAttachedCommentMap.set(element, dynamicInlineScriptCommentElement);
           return rawDOMAppendOrInsertBefore.call(mountDOM, dynamicInlineScriptCommentElement, referenceNode);

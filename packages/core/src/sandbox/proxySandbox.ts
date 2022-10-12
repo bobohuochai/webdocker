@@ -1,9 +1,14 @@
 import { SandBox, WindowProxy } from '../interface';
 import { getTargetValue, unscopedGlobals } from '../common';
 import { createContext } from './context';
+import { isPropertyFrozen, nativeGlobal } from '../utils';
 
 type FakeWindow = Window & Record<PropertyKey, any>;
 type SymbolTarget = 'target' | 'globalContext';
+
+const useNativeWindowForBindingsProps = new Map<PropertyKey, boolean>([
+  ['fetch', true],
+]);
 
 /*
  variables who are impossible to be overwritten need to be escaped from proxy sandbox for performance reasons
@@ -194,12 +199,23 @@ export default class ProxySandbox implements SandBox {
 
         // 返回当前值
         // eslint-disable-next-line no-nested-ternary
-        const value = propertiesWithGetter.has(p)
-          ? (globalContext as any)[p]
-          : p in target
-            ? (target as any)[p]
-            : (globalContext as any)[p];
-        return getTargetValue(globalContext, value);
+        const actualTarget = propertiesWithGetter.has(p) ? globalContext : p in target ? target : globalContext;
+        const value = actualTarget[p];
+
+        // frozen value should return directly, see https://github.com/umijs/qiankun/issues/2015
+        if (isPropertyFrozen(actualTarget, p)) {
+          return value;
+        }
+
+        /* Some dom api must be bound to native window, otherwise it would cause exception like 'TypeError: Failed to execute 'fetch' on 'Window': Illegal invocation'
+           See this code:
+             const proxy = new Proxy(window, {});
+             const proxyFetch = fetch.bind(proxy);
+             proxyFetch('https://qiankun.com');
+        */
+        const boundTarget = useNativeWindowForBindingsProps.get(p) ? nativeGlobal : globalContext;
+
+        return getTargetValue(boundTarget, value);
       },
       // trap in operator
       // see https://github.com/styled-components/styled-components/blob/master/packages/styled-components/src/constants.js#L12

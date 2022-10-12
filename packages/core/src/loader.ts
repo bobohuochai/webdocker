@@ -9,6 +9,7 @@ import {
 } from './utils';
 import * as css from './sandbox/css';
 import getAddons from './addons';
+import { lexicalGlobals } from './common';
 
 const rawAppendChild = HTMLElement.prototype.appendChild;
 
@@ -155,9 +156,7 @@ export async function loadApp<T>(
 
   await execHooksChain(toArray(beforeLoad), app, global);
 
-  const exportMicroApp = await execScripts(global, true).catch((err) => {
-    console.warn(err);
-  });
+  const exportMicroApp = await execScripts(global, true, { scopedGlobalVariables: lexicalGlobals });
   console.log('export micro app', exportMicroApp);
   const { mount, unmount } = getLifecyclesFromExports(
     exportMicroApp as AppLifecycles<T>,
