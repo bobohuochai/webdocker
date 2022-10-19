@@ -44,6 +44,24 @@ export default  {
 
 ```
 
+预加载微应用
+
+```javascript
+import { prefetchApps } from '@webdocker/core'
+
+prefetchApps([
+  {
+    name: 'I18nMicroApp',
+    entry: {
+      scripts: [
+        `js url`,
+      ],
+      styles: [`css url`]
+    }
+  }
+])
+```
+
 
 ### 微应用
 
