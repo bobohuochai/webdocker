@@ -133,3 +133,18 @@ export function isPropertyFrozen(target: any, p?: PropertyKey): boolean {
 
   return frozen;
 }
+
+/**
+ * lazy single instance
+ */
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const getSingle = (fn:Function) => {
+  let instance:any = null;
+  return function create(this:any, ...args:any[]) {
+    if (!instance) {
+      // eslint-disable-next-line prefer-spread
+      instance = fn.apply(this, args);
+    }
+    return instance;
+  };
+};

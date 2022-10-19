@@ -1,5 +1,6 @@
 import { DocumentProxy } from '../interface';
 import Document from './document';
+import { getSingle } from '../utils';
 
 class Context {
   document: DocumentProxy;
@@ -9,11 +10,4 @@ class Context {
   }
 }
 
-let context:Context | null = null;
-
-export function createContext() {
-  if (!context) {
-    context = new Context();
-  }
-  return context;
-}
+export const createContext = getSingle(() => new Context());

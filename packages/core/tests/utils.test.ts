@@ -1,6 +1,7 @@
 import {
   genAppInstanceIdByName, Deferred, getDefaultTplWrapper, toArray,
   nextTask, sleep,
+  getSingle,
 } from '../src/utils';
 
 test('should genAppInstanceIdByName works well', () => {
@@ -49,4 +50,15 @@ test('nextTask should works well', async () => {
   nextTask(() => ++counter);
   await sleep(0);
   expect(counter).toBe(3);
+});
+
+test('getSingle should works well', async () => {
+  function createInstance() {
+    // eslint-disable-next-line no-new-object
+    return new Object('instance');
+  }
+  const createObjectFn = getSingle(createInstance);
+  const instanceA = createObjectFn();
+  const instantceB = createObjectFn();
+  expect(instanceA === instantceB).toBe(true);
 });
