@@ -1,4 +1,5 @@
 import { noop } from 'lodash';
+import { SandBox } from '../../interface';
 
 import { patchHTMLDynamicAppendPrototypeFunctions } from './common';
 
@@ -29,7 +30,7 @@ function calcAppCounter(appName:string, calcType:'increase'|'decrease') {
 export function patchSandbox(
   appName:string,
   appWrapperGetter:()=>HTMLElement,
-  proxy:Window,
+  sandbox:SandBox,
   mounting = true,
 ) {
   const unpatchDynamicAppendPrototypeFunctions = patchHTMLDynamicAppendPrototypeFunctions(
@@ -37,7 +38,7 @@ export function patchSandbox(
     () => ({
       appName,
       appWrapperGetter,
-      proxy,
+      sandbox,
       dynamicStyleSheetElements: [],
     }),
   );

@@ -10,6 +10,13 @@ export type WindowProxy = Window
 
 export type DocumentProxy = Document
 
+// https:// stackoverflow.com/questions/63961803/eslint-says-all-enums-in-typescript-app-are-already-declared-in-the-upper-scope
+// eslint-disable-next-line no-shadow
+export enum SandboxType {
+  PROXY ='proxy',
+  IFRAME = 'iframe'
+}
+
 export type SandBox = {
   /** 沙箱的名字 */
   name: string;
@@ -23,13 +30,16 @@ export type SandBox = {
   active: () => void;
   /** 关闭沙箱 */
   inactive: () => void;
+
+  sandboxType:SandboxType;
 }
 
 export interface LoadableApp<T extends Record<string, any>> {
   name:string
   entry:{ styles?: string[], scripts?: string[], html?: string };
   container:string | HTMLElement,
-  props?:T
+  props?:T,
+  initialPath?:string
 }
 
 export type AppConfig = {
@@ -55,13 +65,13 @@ export type AppLifecycles<ExtraProps> = {
 
 export type FrameworkConfiguration = {
   globalContext?:typeof window,
-  sandbox?:boolean,
-  dynamicPatch?:boolean
+  sandbox?: boolean | {iframe:boolean},
+  dynamicPatch?:boolean,
 }
 
 export type ContainerConfig = {
   appName: string;
-  proxy: WindowProxy;
+  sandbox: SandBox;
   dynamicStyleSheetElements: Array<HTMLStyleElement | HTMLLinkElement>;
   appWrapperGetter: (...args:any[])=>any;
 };

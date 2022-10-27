@@ -1,3 +1,5 @@
+import { SandboxType } from './interface';
+
 export function isBoundedFunction(fn:CallableFunction) {
   return fn.name.indexOf('bound ') === 0 && !fn.hasOwnProperty('prototype');
 }
@@ -114,6 +116,17 @@ export const unscopedGlobals = [
   'Set',
   'parseInt',
   'requestAnimationFrame',
+  'Document',
 ];
 
 export const lexicalGlobals = [...unscopedGlobals, 'globalThis', 'window', 'self'];
+
+export function getGlobalLexicalVariables(sandboxType:SandboxType = SandboxType.PROXY) {
+  const sanboxTypesGlobalVariables = {
+    [`${SandboxType.IFRAME}`]: ['window', 'location', 'history', 'document'],
+    [`${SandboxType.PROXY}`]: lexicalGlobals,
+  };
+  const current = sanboxTypesGlobalVariables[sandboxType];
+
+  return current || sanboxTypesGlobalVariables[SandboxType.PROXY];
+}

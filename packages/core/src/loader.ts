@@ -1,6 +1,7 @@
 import { importEntry } from 'import-html-entry';
 import { concat, isFunction, mergeWith } from 'lodash';
 import { createSandboxContainer } from './sandbox/index';
+import { createIframeContainer } from './frame/index';
 import {
   LoadableApp, FrameworkConfiguration, FrameworkLifecycles, LifecycleFn, AppLifecycles,
 } from './interface';
@@ -113,7 +114,9 @@ export async function loadApp<T>(
   config:FrameworkConfiguration = { dynamicPatch: true },
   lifeCycles?:FrameworkLifecycles<T>,
 ) {
-  const { container, name: appName, entry } = app;
+  const {
+    container, name: appName, entry, initialPath = '/',
+  } = app;
   const appInstanceId = genAppInstanceIdByName(appName);
 
   const { sandbox = true, globalContext = window } = config;
@@ -139,8 +142,17 @@ export async function loadApp<T>(
   let unmountSandbox = () => Promise.resolve();
   let global = globalContext;
   let sandboxContainer;
+  const isIframeIsolation = typeof sandbox === 'object' && !!sandbox.iframe;
   if (sandbox) {
-    sandboxContainer = createSandboxContainer(appInstanceId, () => appElement, config, global);
+    if (isIframeIsolation) {
+      sandboxContainer = await createIframeContainer(appInstanceId, () => appElement, config);
+      // update iframe location path
+      sandboxContainer.instance.history.replaceState(null, '', initialPath);
+      // update iframe context body
+      sandboxContainer.instance.updateBody(document.body);
+    } else {
+      sandboxContainer = createSandboxContainer(appInstanceId, () => appElement, config, global);
+    }
     mountSandbox = sandboxContainer.mount;
     unmountSandbox = sandboxContainer.unmount;
     // 用沙箱的代理对象作为接下来使用的全局对象
@@ -156,7 +168,15 @@ export async function loadApp<T>(
 
   await execHooksChain(toArray(beforeLoad), app, global);
 
-  const exportMicroApp = await execScripts(global, true, { scopedGlobalVariables: lexicalGlobals });
+  const exportMicroApp = await execScripts(
+    global,
+    true,
+    {
+      scopedGlobalVariables: lexicalGlobals,
+      iframe: isIframeIsolation,
+      context: sandboxContainer?.instance,
+    } as any,
+  );
   console.log('export micro app', exportMicroApp);
   const { mount, unmount } = getLifecyclesFromExports(
     exportMicroApp as AppLifecycles<T>,

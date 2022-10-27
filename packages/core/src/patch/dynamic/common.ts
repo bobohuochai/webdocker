@@ -7,7 +7,7 @@
 
 import { execScripts } from 'import-html-entry';
 import { isFunction } from 'lodash';
-import { ContainerConfig } from '../../interface';
+import { ContainerConfig, SandboxType } from '../../interface';
 import { webdokcerHeadTagName } from '../../utils';
 import * as css from '../../sandbox/css';
 import { lexicalGlobals } from '../../common';
@@ -121,13 +121,13 @@ function getOverwrittenAppendChildOrInsertBefore(opts:{
     }
     if (element.tagName) {
       const {
-        appWrapperGetter, proxy, appName,
+        appWrapperGetter, sandbox, appName,
       } = containerConfig;
 
       switch (element.tagName) {
         case LINK_TAG_NAME:
         case STYLE_TAG_NAME: {
-          console.log('style element overwrite====>', element, window.location.pathname, document);
+          console.log('style element overwrite====>', element, window.location.pathname, document, appName);
           let stylesheetElement:HTMLLinkElement |HTMLStyleElement = newChild as any;
           const appWrapper = appWrapperGetter();
           // 排除<link ref="icon" href="favicon.icon">
@@ -161,7 +161,7 @@ function getOverwrittenAppendChildOrInsertBefore(opts:{
           // https://hijiangtao.github.io/2022/06/11/JavaScript-Sandbox-Mechanism-and-Its-History/
           const scopedGlobalVariables = lexicalGlobals;
           if (src) {
-            execScripts(null, [src], proxy, {
+            execScripts(null, [src], sandbox.proxy, {
               fetch: window.fetch,
               strictGlobal: true,
               scopedGlobalVariables,
@@ -187,14 +187,21 @@ function getOverwrittenAppendChildOrInsertBefore(opts:{
                 manualInvokeElementOnError(element);
                 element = null;
               },
-            });
+              iframe: sandbox.sandboxType === SandboxType.IFRAME,
+              context: sandbox,
+            } as any);
             const dynamicScriptCommentElement = document.createComment(`dynamic script ${src} replaced by webdocker`);
             dynamicScriptAttachedCommentMap.set(element, dynamicScriptCommentElement);
             return rawDOMAppendOrInsertBefore.call(mountDOM, dynamicScriptCommentElement, referenceNode);
           }
 
           // 内联脚本处理, 内联脚本不会触发onload，onerror event
-          execScripts(null, [`<script>${text}</script>`], proxy, { strictGlobal: true, scopedGlobalVariables });
+          execScripts(null, [`<script>${text}</script>`], sandbox.proxy, {
+            strictGlobal: true,
+            scopedGlobalVariables,
+            iframe: sandbox.sandboxType === SandboxType.IFRAME,
+            context: sandbox,
+          } as any);
           const dynamicInlineScriptCommentElement = document.createComment('dynamic inline script replaced by webdocker');
           dynamicScriptAttachedCommentMap.set(element, dynamicInlineScriptCommentElement);
           return rawDOMAppendOrInsertBefore.call(mountDOM, dynamicInlineScriptCommentElement, referenceNode);

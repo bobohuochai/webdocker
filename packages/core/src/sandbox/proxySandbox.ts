@@ -1,4 +1,4 @@
-import { SandBox, WindowProxy } from '../interface';
+import { SandBox, SandboxType, WindowProxy } from '../interface';
 import { getTargetValue, unscopedGlobals } from '../common';
 import { createContext } from './context';
 import { isPropertyFrozen, nativeGlobal } from '../utils';
@@ -99,6 +99,8 @@ export default class ProxySandbox implements SandBox {
 
   // 最后设置的props
   latestSetProp: PropertyKey | null = null;
+
+  sandboxType = SandboxType.PROXY;
 
   active() {
     if (!this.sandboxRunning) activeSandboxCount++;
