@@ -175,7 +175,3 @@ module.exports = {
   },
 };
 ```
-
-## License
-
-[MIT](LICENSE)

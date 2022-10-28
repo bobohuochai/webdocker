@@ -2,7 +2,14 @@
 
 将原本微应用入口包装一下，导出 **{mount: (props?: {}) => void;unmount: () => void;}** 对象，使之可以被宿主应用使用。
 
-## How to use
+
+## 安装
+
+```bash
+npm install @webdocker/vue-microapp-entry
+```
+
+## 使用
 ```vue(2.x)
 
 import { mount } from "@webdocker/vue-microapp-entry"
