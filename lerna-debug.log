@@ -12,22 +12,26 @@
 5 silly initialize attempt
 6 silly initialize success
 7 silly execute attempt
-8 silly runScriptInDir build [] vue-microapp
+8 silly runScriptInDir build [] vue-application
 9 silly getExecOpts {
-9 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-microapp'
+9 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-application'
 9 silly getExecOpts }
-10 silly runScriptInDir build [] core
-11 silly getExecOpts { cwd: '/Users/xujun/Documents/codes/webDocker/packages/core' }
-12 silly runScriptInDir build [] webdocker-data
-13 silly getExecOpts {
-13 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/webdocker-data'
-13 silly getExecOpts }
-14 error build Errored while running script in '@webdocker/core'
-15 error execute callback with error
-16 error Error: Command failed: yarn run build
-16 error error Command failed with exit code 2.
-16 error $ rm -rf lib && tsc -p tsconfig.build.json
-16 error src/frame/window.ts(24,7): error TS6133: 'unscopables' is declared but its value is never read.
-16 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-16 error
-16 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11
+10 silly runScriptInDir build [] vue-microapp
+11 silly getExecOpts {
+11 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-microapp'
+11 silly getExecOpts }
+12 silly runScriptInDir build [] core
+13 silly getExecOpts { cwd: '/Users/xujun/Documents/codes/webDocker/packages/core' }
+14 silly runScriptInDir build [] webdocker-data
+15 silly getExecOpts {
+15 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/webdocker-data'
+15 silly getExecOpts }
+16 error build Errored while running script in '@webdocker/core'
+17 error execute callback with error
+18 error Error: Command failed: yarn run build
+18 error error Command failed with exit code 2.
+18 error $ rm -rf lib && tsc -p tsconfig.build.json
+18 error src/frame/window.ts(3,19): error TS6133: 'IframeContextConfig' is declared but its value is never read.
+18 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+18 error
+18 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11

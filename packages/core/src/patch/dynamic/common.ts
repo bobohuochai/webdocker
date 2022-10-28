@@ -187,9 +187,7 @@ function getOverwrittenAppendChildOrInsertBefore(opts:{
                 manualInvokeElementOnError(element);
                 element = null;
               },
-              iframe: sandbox.sandboxType === SandboxType.IFRAME,
-              context: sandbox,
-            } as any);
+            });
             const dynamicScriptCommentElement = document.createComment(`dynamic script ${src} replaced by webdocker`);
             dynamicScriptAttachedCommentMap.set(element, dynamicScriptCommentElement);
             return rawDOMAppendOrInsertBefore.call(mountDOM, dynamicScriptCommentElement, referenceNode);

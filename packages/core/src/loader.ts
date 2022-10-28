@@ -173,9 +173,7 @@ export async function loadApp<T>(
     true,
     {
       scopedGlobalVariables: lexicalGlobals,
-      iframe: isIframeIsolation,
-      context: sandboxContainer?.instance,
-    } as any,
+    },
   );
   console.log('export micro app', exportMicroApp);
   const { mount, unmount } = getLifecyclesFromExports(
