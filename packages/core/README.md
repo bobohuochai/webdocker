@@ -23,8 +23,8 @@ npm install @webdocker/core
 | 函数参数 | type | description |
 | ------ | --------- | --------------- |
 | app | LoadableApp  | 必填，微应用配置 |
-｜config| FrameworkConfiguration| 选填，框架配置｜
-｜lifeCycles| FrameworkLifecycles|选填， 生命周期函数Hooks|
+| config| FrameworkConfiguration | 选填，框架配置 |
+| lifeCycles| FrameworkLifecycles| 选填， 生命周期函数Hooks|
 
 ##### 返回
 - `Promise<{ name: string; mount: () => Promise<void>; unmount: () => Promise<void>;}>`
