@@ -1,6 +1,5 @@
 /**
- * https://github.com/umijs/qiankun
- * 模仿乾坤微前端
+ * https://git.pingpongx.org/front/micro-front/webdocker
  */
 import { loadApp } from './loader';
 import { prefetchApps } from './prefetch';
