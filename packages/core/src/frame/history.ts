@@ -8,7 +8,7 @@ class History {
       frame.postMessage({
         type: `${id}:history-change`,
         data: JSON.parse(JSON.stringify(frame.location)),
-      });
+      }, '*');
     };
     const originalPushStatus = frame.history.pushState;
     const originalReplaceStatus = frame.history.replaceState;
