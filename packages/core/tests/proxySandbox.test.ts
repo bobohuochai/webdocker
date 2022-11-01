@@ -203,3 +203,28 @@ test('window.Vue & window.browerCollector should not equal with the sandbox', ()
   expect(proxy.browerCollector).toBe(undefined);
   expect(window.browerCollector).toBe('blackVar');
 });
+
+test('should work well while the property existed in global context before', () => {
+  Object.defineProperty(window, 'readOnlyPropertyInGlobalContext', {
+    value: 1,
+    writable: false,
+    configurable: true,
+  });
+  const { proxy } = new ProxySandbox('readonlu-sandbox');
+  proxy.readOnlyPropertyInGlobalContext = 456;
+  expect(proxy.readOnlyPropertyInGlobalContext).toBe(1);
+
+  Object.defineProperty(window, 'hasSetAccessorInGlobalContext', {
+    get() {
+      return 1;
+    },
+    set() {
+
+    },
+    configurable: true,
+  });
+
+  const { proxy: proxySet } = new ProxySandbox('set-sandbox');
+  proxySet.hasSetAccessorInGlobalContext = 2;
+  expect(proxySet.hasSetAccessorInGlobalContext).toBe(2);
+});

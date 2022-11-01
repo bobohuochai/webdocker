@@ -13,11 +13,11 @@ test('setInterval patcher work', async () => {
   const unclearedListenerWithArgs = jest.fn();
 
   const interval1 = window.setInterval(clearedListener, 60);
-  window.setInterval(unclearedListener, 8);
+  window.setInterval(unclearedListener, 10);
   window.setInterval(unclearedListenerWithArgs, 30, 'hello');
   window.clearInterval(interval1);
 
-  await sleep(20);
+  await sleep(23);
 
   free();
 

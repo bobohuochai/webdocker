@@ -134,13 +134,18 @@ export default class ProxySandbox implements SandBox {
           // 判断window上有该属性，并获取到属性的 writable, configurable, enumerable等值。
           if (!target.hasOwnProperty(p) && globalContext.hasOwnProperty(p)) {
             const descriptor = Object.getOwnPropertyDescriptor(globalContext, p);
-            const { writable, configurable, enumerable } = descriptor!;
-            if (writable) {
+            const {
+              writable, configurable, enumerable, set,
+            } = descriptor!;
+            // only writable property can be overwritten
+            // here we ignored accessor descriptor of globalContext as it makes no sense to trigger its logic(which might make sandbox escaping instead)
+            // we force to set value by data descriptor
+            if (writable || set) {
               // 通过defineProperty把值复制到代理对象上，
               Object.defineProperty(target, p, {
                 configurable,
                 enumerable,
-                writable,
+                writable: true,
                 value,
               });
             }
