@@ -100,6 +100,7 @@ class Context implements SandBox {
   static create(config:IframeContextConfig):Promise<Context> {
     return new Promise((resolve) => {
       const iframe = document.createElement('iframe');
+      // https://stackoverflow.com/questions/25098021/securityerror-blocked-a-frame-with-origin-from-accessing-a-cross-origin-frame
       iframe.setAttribute('src', config.url ? config.url : '/webdockerapi.json');
       iframe.style.cssText = 'position: absolute; top: -20000px; width: 100%; height: 1px;';
       document.body.appendChild(iframe);
