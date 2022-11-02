@@ -146,7 +146,7 @@ export async function loadApp<T>(
   if (sandbox) {
     if (isIframeIsolation) {
       sandboxContainer = await createIframeContainer(appInstanceId, () => appElement, config);
-      const currentContext = sandboxContainer.instance
+      const currentContext = sandboxContainer.instance;
       // update iframe location path
       currentContext.history.replaceState(null, '', initialPath);
       // update iframe context body

@@ -31,7 +31,7 @@
 18 error Error: Command failed: yarn run build
 18 error error Command failed with exit code 2.
 18 error $ rm -rf lib && tsc -p tsconfig.build.json
-18 error src/frame/window.ts(3,19): error TS6133: 'IframeContextConfig' is declared but its value is never read.
+18 error src/frame/window.ts(5,1): error TS6192: All imports in import declaration are unused.
 18 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 18 error
 18 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11
