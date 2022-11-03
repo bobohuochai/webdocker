@@ -1,6 +1,8 @@
 /* eslint-disable import/no-unresolved */
 import React, { HTMLAttributes, useState, useEffect } from 'react';
-import type { LoadableAppEntry, FrameworkConfiguration, FrameworkLifecycles } from '@webdocker/core';
+import type {
+  LoadableAppEntry, FrameworkConfiguration, FrameworkLifecycles,
+} from '@webdocker/core';
 import { loadApp } from '@webdocker/core';
 
 interface ReturnApp {
@@ -14,6 +16,7 @@ interface ApplicationProps<T> extends HTMLAttributes<Element> {
   manifest:LoadableAppEntry,
   config:FrameworkConfiguration,
   lifeCycles?:FrameworkLifecycles<T>,
+  initialPath?:string;
   /**
    * 处理错误的生命周期
    */
@@ -32,7 +35,7 @@ interface ApplicationProps<T> extends HTMLAttributes<Element> {
 }
 export default function Application<T>(props:ApplicationProps<T>) {
   const {
-    style = {}, className = '', name, manifest, config, lifeCycles,
+    style = {}, className = '', name, manifest, initialPath, config, lifeCycles,
     microAppDidCatch,
     microAppDidUnmount,
     microAppDidMount,
@@ -80,6 +83,7 @@ export default function Application<T>(props:ApplicationProps<T>) {
           container: domRef.current ? domRef.current : '',
           name,
           entry: manifest,
+          initialPath,
         },
         config,
         lifeCycles,
