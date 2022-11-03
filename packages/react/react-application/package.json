@@ -63,5 +63,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@webdocker/core": "^1.0"
+  }
 }

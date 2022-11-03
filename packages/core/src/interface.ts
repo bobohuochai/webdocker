@@ -34,9 +34,13 @@ export type SandBox = {
   sandboxType:SandboxType;
 }
 
+export interface LoadableAppEntry {
+  styles?: string[], scripts?: string[], html?: string
+}
+
 export interface LoadableApp<T extends Record<string, any>> {
   name:string
-  entry:{ styles?: string[], scripts?: string[], html?: string };
+  entry:LoadableAppEntry,
   container:string | HTMLElement,
   props?:T,
   initialPath?:string
