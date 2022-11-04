@@ -24,3 +24,28 @@ LightYearAppliction.args = {
   initialPath: '/lightyear/collection/advanceCollectionhome',
   config: { sandbox: { iframe: true }, dynamicPatch: true },
 };
+
+export const Loading = Template.bind({});
+
+Loading.args = {
+  name: 'Loading',
+  manifest: {
+    scripts: ['https://dev-cdn17.pingpongx.com/lightyear_file/22.8.4.4.1/my-lib.umd.js'],
+    styles: ['https://dev-cdn17.pingpongx.com/lightyear_file/22.8.4.4.1/my-lib.css'],
+  },
+  initialPath: '/lightyear/collection/advanceCollectionhome',
+  config: { sandbox: { iframe: true }, dynamicPatch: true },
+  loading: <div>loading</div>,
+};
+
+export const Error = Template.bind({});
+Error.args = {
+  name: 'Error',
+  manifest: {
+    scripts: ['https://dev-cdn17.pingpongx.com/lightyear_file/22.8.4.4.1/my-lib.umd1.js'],
+    styles: ['https://dev-cdn17.pingpongx.com/lightyear_file/22.8.4.4.1/my-lib.css'],
+  },
+  initialPath: '/lightyear/collection/advanceCollectionhome',
+  config: { sandbox: { iframe: true }, dynamicPatch: true },
+  error: <div>Error</div>,
+};

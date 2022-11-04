@@ -9,6 +9,7 @@
 | @webdocker/data |https://git.pingpongx.org/front/micro-front/webdocker/-/tree/master/packages/webdocker-data  | 应用之间通信库  |
 | @webdocker/vue-host-application | https://git.pingpongx.org/front/micro-front/webdocker/-/tree/master/packages/vue/vue-application | vue宿主应用桥接库 |
 | @webdocker/vue-microapp-entry | https://git.pingpongx.org/front/micro-front/webdocker/-/tree/master/packages/vue/vue-microapp | vue 微应用入口桥接库 |
+|@webdocker/react-host-application|https://git.pingpongx.org/front/micro-front/webdocker/-/tree/master/packages/react/react-application|react宿主应用桥接库|
 
 ## 原因
 
