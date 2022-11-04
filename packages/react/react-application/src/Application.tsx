@@ -13,11 +13,11 @@ interface ReturnApp {
   unmount: () => Promise<void>;
 }
 
-interface ApplicationProps<T> extends HTMLAttributes<Element> {
+interface ApplicationProps extends HTMLAttributes<Element> {
   name:string;
   manifest:LoadableAppEntry,
   config:FrameworkConfiguration,
-  lifeCycles?:FrameworkLifecycles<T>,
+  lifeCycles?:FrameworkLifecycles<any>,
   initialPath?:string;
   /**
    * 处理错误的生命周期
@@ -39,10 +39,10 @@ interface ApplicationProps<T> extends HTMLAttributes<Element> {
    */
   error?: boolean | React.ReactElement;
 
-  loading:boolean | React.ReactElement;
+  loading?:boolean | React.ReactElement;
 
 }
-export default function Application<T>(props:ApplicationProps<T>) {
+export default function Application(props:ApplicationProps) {
   const {
     style = {}, className = '', name, manifest, initialPath, config, lifeCycles,
     microAppDidCatch,

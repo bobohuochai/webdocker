@@ -1,2 +1,3 @@
-export { default as Button } from './button';
-export { default as Application } from './Application';
+import Application from './Application';
+
+export default Application;
