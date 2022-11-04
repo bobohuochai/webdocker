@@ -4,6 +4,8 @@ import type {
   LoadableAppEntry, FrameworkConfiguration, FrameworkLifecycles,
 } from '@webdocker/core';
 import { loadApp } from '@webdocker/core';
+import ReactLoading from 'react-loading';
+import './Application.scss';
 
 interface ReturnApp {
   name: string;
@@ -32,6 +34,13 @@ interface ApplicationProps<T> extends HTMLAttributes<Element> {
    */
   microAppDidMount?: (app:ReturnApp) => void;
 
+  /**
+   * 是否关闭错误提示
+   */
+  error?: boolean | React.ReactElement;
+
+  loading:boolean | React.ReactElement;
+
 }
 export default function Application<T>(props:ApplicationProps<T>) {
   const {
@@ -48,6 +57,40 @@ export default function Application<T>(props:ApplicationProps<T>) {
   let unmounted = false;
 
   let app:ReturnApp|null = null;
+
+  const getError = () => {
+    const propError = props.error;
+    if (propError === false) {
+      return null;
+    } if (propError && React.isValidElement(propError)) {
+      return propError;
+    }
+    const commonErrorStyle = {
+      lineHeight: '22px',
+      color: '#d93026',
+      fontSize: 14,
+    };
+    const containerStyle = {
+      background: '#fcebea',
+      padding: '24px',
+    };
+    return error && (
+      <div style={containerStyle}>
+        <div style={commonErrorStyle}>{error.message}</div>
+        <pre style={commonErrorStyle}>{error.stack }</pre>
+      </div>
+    );
+  };
+
+  const getLoading = () => {
+    const loadingProp = props.loading;
+    if (loadingProp === false) {
+      return null;
+    } if (loadingProp && React.isValidElement(loadingProp)) {
+      return loadingProp;
+    }
+    return <div className='loading-box'><ReactLoading type='bars' color='#1fa0e8'></ReactLoading></div>;
+  };
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   const executeAction = (action:string, thing:Function) => {
@@ -107,8 +150,13 @@ export default function Application<T>(props:ApplicationProps<T>) {
     };
   }, []);
 
+  if (hasError && error) {
+    return getError();
+  }
+
   return (
     <React.Fragment>
+      {loading ? getLoading() : null}
       <div ref={domRef} style={style} className={className}>
       </div>
     </React.Fragment>
