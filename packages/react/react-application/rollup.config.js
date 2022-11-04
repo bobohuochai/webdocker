@@ -8,6 +8,7 @@ const resolve = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 
 const postcss = require('rollup-plugin-postcss');
+const nodePolyfills = require('rollup-plugin-node-polyfills');
 
 const { terser } = require('rollup-plugin-terser');
 const peerDepsExternal = require('rollup-plugin-peer-deps-external');
@@ -32,6 +33,8 @@ module.exports = [
       peerDepsExternal(),
       resolve(),
       commonjs(),
+      // https://github.com/ionic-team/rollup-plugin-node-polyfills/issues/6
+      nodePolyfills(),
       typescript({ tsconfig: './tsconfig.json' }),
       postcss(),
       terser(),

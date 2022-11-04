@@ -12,26 +12,123 @@
 5 silly initialize attempt
 6 silly initialize success
 7 silly execute attempt
-8 silly runScriptInDir build [] vue-application
+8 silly runScriptInDir build [] vue-microapp
 9 silly getExecOpts {
-9 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-application'
+9 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-microapp'
 9 silly getExecOpts }
-10 silly runScriptInDir build [] vue-microapp
-11 silly getExecOpts {
-11 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-microapp'
-11 silly getExecOpts }
-12 silly runScriptInDir build [] core
-13 silly getExecOpts { cwd: '/Users/xujun/Documents/codes/webDocker/packages/core' }
-14 silly runScriptInDir build [] webdocker-data
+10 silly runScriptInDir build [] core
+11 silly getExecOpts { cwd: '/Users/xujun/Documents/codes/webDocker/packages/core' }
+12 silly runScriptInDir build [] webdocker-data
+13 silly getExecOpts {
+13 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/webdocker-data'
+13 silly getExecOpts }
+14 silly runScriptInDir build [] vue-application
 15 silly getExecOpts {
-15 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/webdocker-data'
+15 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-application'
 15 silly getExecOpts }
-16 error build Errored while running script in '@webdocker/core'
-17 error execute callback with error
-18 error Error: Command failed: yarn run build
-18 error error Command failed with exit code 2.
-18 error $ rm -rf lib && tsc -p tsconfig.build.json
-18 error src/frame/window.ts(5,1): error TS6192: All imports in import declaration are unused.
-18 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-18 error
-18 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11
+16 silly runScriptInDir build [] react-application
+17 silly getExecOpts {
+17 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/react/react-application'
+17 silly getExecOpts }
+18 error build Errored while running script in '@webdocker/react-host-application'
+19 error execute callback with error
+20 error Error: Command failed: yarn run build
+20 error [36m
+20 error [1msrc/index.ts[22m → [1mdist/cjs/index.js, dist/esm/index.js[22m...[39m
+20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4082: Default export of the module has or is using private name 'ButtonProps'.[39m[22m
+20 error [1msrc/stories/Button.stories.tsx: (7:1)[22m
+20 error [90m
+20 error [7m  7[0m export default {
+20 error [7m   [0m [91m~~~~~~~~~~~~~~~~[0m
+20 error [7m  8[0m   title: 'Example/Button',
+20 error [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+20 error [7m...[0m
+20 error [7m 13[0m   },
+20 error [7m   [0m [91m~~~~[0m
+20 error [7m 14[0m } as ComponentMeta<typeof Button>;
+20 error [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+20 error [39m
+20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4023: Exported variable 'Primary' has or is using name 'ButtonProps' from external module "/Users/xujun/Documents/codes/webDocker/packages/react/react-application/src/stories/Button" but cannot be named.[39m[22m
+20 error [1msrc/stories/Button.stories.tsx: (19:14)[22m
+20 error [90m
+20 error [7m19[0m export const Primary = Template.bind({});
+20 error [7m  [0m [91m             ~~~~~~~[0m
+20 error [39m
+20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4023: Exported variable 'Secondary' has or is using name 'ButtonProps' from external module "/Users/xujun/Documents/codes/webDocker/packages/react/react-application/src/stories/Button" but cannot be named.[39m[22m
+20 error [1msrc/stories/Button.stories.tsx: (26:14)[22m
+20 error [90m
+20 error [7m26[0m export const Secondary = Template.bind({});
+20 error [7m  [0m [91m             ~~~~~~~~~[0m
+20 error [39m
+20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4023: Exported variable 'Large' has or is using name 'ButtonProps' from external module "/Users/xujun/Documents/codes/webDocker/packages/react/react-application/src/stories/Button" but cannot be named.[39m[22m
+20 error [1msrc/stories/Button.stories.tsx: (31:14)[22m
+20 error [90m
+20 error [7m31[0m export const Large = Template.bind({});
+20 error [7m  [0m [91m             ~~~~~[0m
+20 error [39m
+20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4023: Exported variable 'Small' has or is using name 'ButtonProps' from external module "/Users/xujun/Documents/codes/webDocker/packages/react/react-application/src/stories/Button" but cannot be named.[39m[22m
+20 error [1msrc/stories/Button.stories.tsx: (37:14)[22m
+20 error [90m
+20 error [7m37[0m export const Small = Template.bind({});
+20 error [7m  [0m [91m             ~~~~~[0m
+20 error [39m
+20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4082: Default export of the module has or is using private name 'HeaderProps'.[39m[22m
+20 error [1msrc/stories/Header.stories.tsx: (6:1)[22m
+20 error [90m
+20 error [7m  6[0m export default {
+20 error [7m   [0m [91m~~~~~~~~~~~~~~~~[0m
+20 error [7m  7[0m   title: 'Example/Header',
+20 error [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+20 error [7m...[0m
+20 error [7m 12[0m   },
+20 error [7m   [0m [91m~~~~[0m
+20 error [7m 13[0m } as ComponentMeta<typeof Header>;
+20 error [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+20 error [39m
+20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4023: Exported variable 'LoggedIn' has or is using name 'HeaderProps' from external module "/Users/xujun/Documents/codes/webDocker/packages/react/react-application/src/stories/Header" but cannot be named.[39m[22m
+20 error [1msrc/stories/Header.stories.tsx: (17:14)[22m
+20 error [90m
+20 error [7m17[0m export const LoggedIn = Template.bind({});
+20 error [7m  [0m [91m             ~~~~~~~~[0m
+20 error [39m
+20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4023: Exported variable 'LoggedOut' has or is using name 'HeaderProps' from external module "/Users/xujun/Documents/codes/webDocker/packages/react/react-application/src/stories/Header" but cannot be named.[39m[22m
+20 error [1msrc/stories/Header.stories.tsx: (24:14)[22m
+20 error [90m
+20 error [7m24[0m export const LoggedOut = Template.bind({});
+20 error [7m  [0m [91m             ~~~~~~~~~[0m
+20 error [39m
+20 error [1m[33m(!) "this" has been rewritten to "undefined"[39m[22m
+20 error [90mhttps://rollupjs.org/guide/en/#error-this-is-undefined[39m
+20 error [1mnode_modules/react-loading/dist/react-loading.js[22m
+20 error [90m 8:   else
+20 error  9:     root["Loading"] = factory();
+20 error 10: })(typeof self !== 'undefined' ? self : this, function() {
+20 error                                             ^
+20 error 11: return /******/ (function(modules) { // webpackBootstrap
+20 error 12: /******/ 	// The module cache[39m
+20 error [1m[31m[!] [1mRollupError: "default" is not exported by "node_modules/react-loading/dist/react-loading.js", imported by "src/Application.tsx".[22m[1m[39m[22m
+20 error [36mhttps://rollupjs.org/guide/en/#error-name-is-not-exported-by-module[39m
+20 error src/Application.tsx (5:7)
+20 error [2m3: import React, { useState, useEffect } from 'react';
+20 error 4: import { loadApp } from '@webdocker/core';
+20 error 5: import ReactLoading from 'react-loading';
+20 error           ^
+20 error 6: import './Application.scss';
+20 error 7: export default function Application(props) {[22m
+20 error [2mRollupError: "default" is not exported by "node_modules/react-loading/dist/react-loading.js", imported by "src/Application.tsx".
+20 error     at error (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:206:30)
+20 error     at Module.error (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:13346:16)
+20 error     at Module.traceVariable (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:13709:29)
+20 error     at ModuleScope.findVariable (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:12269:39)
+20 error     at FunctionScope.findVariable (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:7195:38)
+20 error     at ChildScope.findVariable (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:7195:38)
+20 error     at FunctionScope.findVariable (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:7195:38)
+20 error     at ChildScope.findVariable (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:7195:38)
+20 error     at Identifier.bind (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:8276:40)
+20 error     at CallExpression.bind (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:6084:28)[22m
+20 error
+20 error error Command failed with exit code 1.
+20 error $ rollup -c
+20 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+20 error
+20 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11
