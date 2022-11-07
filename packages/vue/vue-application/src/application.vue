@@ -27,6 +27,7 @@ const getWrapProps = (props = {}) => {
   const wrapProps = { ...props, ...(props.appProps || {}) }
   delete wrapProps.name
   delete wrapProps.manifest
+  delete wrapProps.initialPath
   return wrapProps
 }
 
@@ -41,6 +42,10 @@ export default {
     manifest: {
       type: Object,
       required: false,
+    },
+    initialPath:{
+      type:String,
+      required:false
     },
     config: {
       type: Object,
@@ -69,6 +74,7 @@ export default {
           container: this.$refs.el,
           name: this.name,
           entry: this.manifest,
+          initialPath:this.initialPath
         },
         config,
         lifecycles

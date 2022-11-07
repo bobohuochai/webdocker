@@ -16,7 +16,7 @@ npm install @webdocker/vue-host-application
         :manifest="{styles:['https://dev-cdn17.pingpongx.com/lightyear_file/22.8.4.4.1/my-lib.css'],
         scripts:['https://dev-cdn17.pingpongx.com/lightyear_file/22.8.4.4.1/my-lib.umd.js']}"
         initialPath='/lightyear/collection/advanceCollectionhome'
-        config="{ sandbox: { iframe: true }, dynamicPatch: true }"
+        :config="{ sandbox: { iframe: true }, dynamicPatch: true }"
         />
     />
 </template>
@@ -42,7 +42,6 @@ export default {
 
 
 ## Slots
-
 | slot | description |
 | ------ | --------------- |
 | loading | 自定义微应用加载中组件 |

@@ -2,7 +2,7 @@
     "name": "@webdocker/vue-host-application",
     "version": "1.0.2",
     "description": "Vue Host Application Component",
-    "main":"./dist/index.js",
+    "main": "./dist/index.js",
     "keywords": [
         "vue",
         "micro app"
