@@ -71,6 +71,7 @@ export type FrameworkConfiguration = {
   globalContext?:typeof window,
   sandbox?: boolean | {iframe:boolean},
   dynamicPatch?:boolean,
+  globalComponentClassPatch?:boolean | string[]
 }
 
 export type ContainerConfig = {

@@ -1,6 +1,7 @@
-import { FrameworkConfiguration, SandBox, SandboxType } from '../interface';
+import { FrameworkConfiguration, SandBox } from '../interface';
 import patchInterval from './interval';
 import patchWindowListener from './windowListener';
+import patchBodyAppendChild from './bodyAppendChild';
 import { patchSandbox } from './dynamic';
 
 export function patchAtMounting(
@@ -9,11 +10,16 @@ export function patchAtMounting(
   sandbox:SandBox,
   config:FrameworkConfiguration,
 ) {
+  const { dynamicPatch = false, globalComponentClassPatch = true } = config;
   let patchers:any[] = [];
-  if (sandbox.sandboxType === SandboxType.PROXY) {
-    patchers = [() => patchInterval(sandbox.proxy), () => patchWindowListener(sandbox.proxy)];
+  patchers = [() => patchInterval(sandbox.proxy), () => patchWindowListener(sandbox.proxy),
+  ];
+
+  if (globalComponentClassPatch) {
+    patchers = [...patchers, () => patchBodyAppendChild(appName, globalComponentClassPatch)];
   }
-  if (config.dynamicPatch) {
+
+  if (dynamicPatch) {
     patchers = [...patchers, () => patchSandbox(appName, elementGetter, sandbox, true)];
   }
   return patchers.map((patch) => patch());

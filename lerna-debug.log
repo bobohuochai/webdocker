@@ -12,123 +12,123 @@
 5 silly initialize attempt
 6 silly initialize success
 7 silly execute attempt
-8 silly runScriptInDir build [] vue-microapp
+8 silly runScriptInDir build [] vue-application
 9 silly getExecOpts {
-9 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-microapp'
+9 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-application'
 9 silly getExecOpts }
-10 silly runScriptInDir build [] core
-11 silly getExecOpts { cwd: '/Users/xujun/Documents/codes/webDocker/packages/core' }
-12 silly runScriptInDir build [] webdocker-data
+10 silly runScriptInDir build [] vue-microapp
+11 silly getExecOpts {
+11 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-microapp'
+11 silly getExecOpts }
+12 silly runScriptInDir build [] react-application
 13 silly getExecOpts {
-13 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/webdocker-data'
+13 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/react/react-application'
 13 silly getExecOpts }
-14 silly runScriptInDir build [] vue-application
-15 silly getExecOpts {
-15 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-application'
-15 silly getExecOpts }
-16 silly runScriptInDir build [] react-application
-17 silly getExecOpts {
-17 silly getExecOpts   cwd: '/Users/xujun/Documents/codes/webDocker/packages/react/react-application'
-17 silly getExecOpts }
-18 error build Errored while running script in '@webdocker/react-host-application'
-19 error execute callback with error
-20 error Error: Command failed: yarn run build
-20 error [36m
-20 error [1msrc/index.ts[22m → [1mdist/cjs/index.js, dist/esm/index.js[22m...[39m
-20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4082: Default export of the module has or is using private name 'ButtonProps'.[39m[22m
-20 error [1msrc/stories/Button.stories.tsx: (7:1)[22m
-20 error [90m
-20 error [7m  7[0m export default {
-20 error [7m   [0m [91m~~~~~~~~~~~~~~~~[0m
-20 error [7m  8[0m   title: 'Example/Button',
-20 error [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-20 error [7m...[0m
-20 error [7m 13[0m   },
-20 error [7m   [0m [91m~~~~[0m
-20 error [7m 14[0m } as ComponentMeta<typeof Button>;
-20 error [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-20 error [39m
-20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4023: Exported variable 'Primary' has or is using name 'ButtonProps' from external module "/Users/xujun/Documents/codes/webDocker/packages/react/react-application/src/stories/Button" but cannot be named.[39m[22m
-20 error [1msrc/stories/Button.stories.tsx: (19:14)[22m
-20 error [90m
-20 error [7m19[0m export const Primary = Template.bind({});
-20 error [7m  [0m [91m             ~~~~~~~[0m
-20 error [39m
-20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4023: Exported variable 'Secondary' has or is using name 'ButtonProps' from external module "/Users/xujun/Documents/codes/webDocker/packages/react/react-application/src/stories/Button" but cannot be named.[39m[22m
-20 error [1msrc/stories/Button.stories.tsx: (26:14)[22m
-20 error [90m
-20 error [7m26[0m export const Secondary = Template.bind({});
-20 error [7m  [0m [91m             ~~~~~~~~~[0m
-20 error [39m
-20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4023: Exported variable 'Large' has or is using name 'ButtonProps' from external module "/Users/xujun/Documents/codes/webDocker/packages/react/react-application/src/stories/Button" but cannot be named.[39m[22m
-20 error [1msrc/stories/Button.stories.tsx: (31:14)[22m
-20 error [90m
-20 error [7m31[0m export const Large = Template.bind({});
-20 error [7m  [0m [91m             ~~~~~[0m
-20 error [39m
-20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4023: Exported variable 'Small' has or is using name 'ButtonProps' from external module "/Users/xujun/Documents/codes/webDocker/packages/react/react-application/src/stories/Button" but cannot be named.[39m[22m
-20 error [1msrc/stories/Button.stories.tsx: (37:14)[22m
-20 error [90m
-20 error [7m37[0m export const Small = Template.bind({});
-20 error [7m  [0m [91m             ~~~~~[0m
-20 error [39m
-20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4082: Default export of the module has or is using private name 'HeaderProps'.[39m[22m
-20 error [1msrc/stories/Header.stories.tsx: (6:1)[22m
-20 error [90m
-20 error [7m  6[0m export default {
-20 error [7m   [0m [91m~~~~~~~~~~~~~~~~[0m
-20 error [7m  7[0m   title: 'Example/Header',
-20 error [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-20 error [7m...[0m
-20 error [7m 12[0m   },
-20 error [7m   [0m [91m~~~~[0m
-20 error [7m 13[0m } as ComponentMeta<typeof Header>;
-20 error [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-20 error [39m
-20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4023: Exported variable 'LoggedIn' has or is using name 'HeaderProps' from external module "/Users/xujun/Documents/codes/webDocker/packages/react/react-application/src/stories/Header" but cannot be named.[39m[22m
-20 error [1msrc/stories/Header.stories.tsx: (17:14)[22m
-20 error [90m
-20 error [7m17[0m export const LoggedIn = Template.bind({});
-20 error [7m  [0m [91m             ~~~~~~~~[0m
-20 error [39m
-20 error [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS4023: Exported variable 'LoggedOut' has or is using name 'HeaderProps' from external module "/Users/xujun/Documents/codes/webDocker/packages/react/react-application/src/stories/Header" but cannot be named.[39m[22m
-20 error [1msrc/stories/Header.stories.tsx: (24:14)[22m
-20 error [90m
-20 error [7m24[0m export const LoggedOut = Template.bind({});
-20 error [7m  [0m [91m             ~~~~~~~~~[0m
-20 error [39m
-20 error [1m[33m(!) "this" has been rewritten to "undefined"[39m[22m
-20 error [90mhttps://rollupjs.org/guide/en/#error-this-is-undefined[39m
-20 error [1mnode_modules/react-loading/dist/react-loading.js[22m
-20 error [90m 8:   else
-20 error  9:     root["Loading"] = factory();
-20 error 10: })(typeof self !== 'undefined' ? self : this, function() {
-20 error                                             ^
-20 error 11: return /******/ (function(modules) { // webpackBootstrap
-20 error 12: /******/ 	// The module cache[39m
-20 error [1m[31m[!] [1mRollupError: "default" is not exported by "node_modules/react-loading/dist/react-loading.js", imported by "src/Application.tsx".[22m[1m[39m[22m
-20 error [36mhttps://rollupjs.org/guide/en/#error-name-is-not-exported-by-module[39m
-20 error src/Application.tsx (5:7)
-20 error [2m3: import React, { useState, useEffect } from 'react';
-20 error 4: import { loadApp } from '@webdocker/core';
-20 error 5: import ReactLoading from 'react-loading';
-20 error           ^
-20 error 6: import './Application.scss';
-20 error 7: export default function Application(props) {[22m
-20 error [2mRollupError: "default" is not exported by "node_modules/react-loading/dist/react-loading.js", imported by "src/Application.tsx".
-20 error     at error (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:206:30)
-20 error     at Module.error (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:13346:16)
-20 error     at Module.traceVariable (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:13709:29)
-20 error     at ModuleScope.findVariable (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:12269:39)
-20 error     at FunctionScope.findVariable (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:7195:38)
-20 error     at ChildScope.findVariable (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:7195:38)
-20 error     at FunctionScope.findVariable (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:7195:38)
-20 error     at ChildScope.findVariable (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:7195:38)
-20 error     at Identifier.bind (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:8276:40)
-20 error     at CallExpression.bind (/Users/xujun/Documents/codes/webDocker/packages/react/react-application/node_modules/rollup/dist/shared/rollup.js:6084:28)[22m
-20 error
-20 error error Command failed with exit code 1.
-20 error $ rollup -c
-20 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-20 error
-20 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11
+14 silly runScriptInDir build [] core
+15 silly getExecOpts { cwd: '/Users/xujun/Documents/codes/webDocker/packages/core' }
+16 error build Errored while running script in '@webdocker/vue-host-application'
+17 error execute callback with error
+18 error Error: Command failed: yarn run build
+18 error error Command failed with exit code 1.
+18 error $ webpack --config ./webpack.config.js
+18 error assets by status 15.6 KiB [cached] 1 asset
+18 error orphan modules 7.76 KiB [orphan] 7 modules
+18 error runtime modules 937 bytes 4 modules
+18 error cacheable modules 27.1 KiB
+18 error   modules by path ./node_modules/vue-loading-overlay/dist/ 10.8 KiB
+18 error     ./node_modules/vue-loading-overlay/dist/vue-loading.min.js 8.83 KiB [built] [code generated]
+18 error     ./node_modules/vue-loading-overlay/dist/vue-loading.css 1.04 KiB [built] [code generated]
+18 error     ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loading-overlay/dist/vue-loading.css 985 bytes [built] [code generated]
+18 error   modules by path ./node_modules/css-loader/dist/runtime/*.js 2.33 KiB
+18 error     ./node_modules/css-loader/dist/runtime/noSourceMaps.js 64 bytes [built] [code generated]
+18 error     ./node_modules/css-loader/dist/runtime/api.js 2.26 KiB [built] [code generated]
+18 error   ./src/index.js + 6 modules 7.21 KiB [built] [code generated]
+18 error   ./node_modules/vue-style-loader/lib/addStylesClient.js + 1 modules 6.71 KiB [built] [code generated]
+18 error
+18 error ERROR in ./src/application.vue?vue&type=script&lang=js& (./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/application.vue?vue&type=script&lang=js&) 22:0-40
+18 error Module not found: Error: Can't resolve '@webdocker/core' in '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/src'
+18 error resolve '@webdocker/core' in '/Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/src'
+18 error   Parsed request is a module
+18 error   using description file: /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/package.json (relative path: ./src)
+18 error     Field 'browser' doesn't contain a valid alias configuration
+18 error     resolve as module
+18 error       /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/src/node_modules doesn't exist or is not a directory
+18 error       looking for modules in /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules
+18 error         single file module
+18 error           using description file: /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/package.json (relative path: ./node_modules/@webdocker/core)
+18 error             no extension
+18 error               Field 'browser' doesn't contain a valid alias configuration
+18 error               /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core is not a file
+18 error             .ts
+18 error               Field 'browser' doesn't contain a valid alias configuration
+18 error               /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core.ts doesn't exist
+18 error             .js
+18 error               Field 'browser' doesn't contain a valid alias configuration
+18 error               /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core.js doesn't exist
+18 error         existing directory /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core
+18 error           using description file: /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core/package.json (relative path: .)
+18 error             using description file: /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/package.json (relative path: ./node_modules/@webdocker/core)
+18 error               no extension
+18 error                 Field 'browser' doesn't contain a valid alias configuration
+18 error                 /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core is not a file
+18 error               .ts
+18 error                 Field 'browser' doesn't contain a valid alias configuration
+18 error                 /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core.ts doesn't exist
+18 error               .js
+18 error                 Field 'browser' doesn't contain a valid alias configuration
+18 error                 /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core.js doesn't exist
+18 error               as directory
+18 error                 existing directory /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core
+18 error                   using description file: /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core/package.json (relative path: .)
+18 error                     use ./lib/index.js from main in package.json
+18 error                       using description file: /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core/package.json (relative path: ./lib/index.js)
+18 error                         no extension
+18 error                           Field 'browser' doesn't contain a valid alias configuration
+18 error                           /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core/lib/index.js doesn't exist
+18 error                         .ts
+18 error                           Field 'browser' doesn't contain a valid alias configuration
+18 error                           /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core/lib/index.js.ts doesn't exist
+18 error                         .js
+18 error                           Field 'browser' doesn't contain a valid alias configuration
+18 error                           /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core/lib/index.js.js doesn't exist
+18 error                         as directory
+18 error                           /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core/lib/index.js doesn't exist
+18 error                     using path: /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core/index
+18 error                       using description file: /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core/package.json (relative path: ./index)
+18 error                         no extension
+18 error                           Field 'browser' doesn't contain a valid alias configuration
+18 error                           /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core/index doesn't exist
+18 error                         .ts
+18 error                           Field 'browser' doesn't contain a valid alias configuration
+18 error                           /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core/index.ts doesn't exist
+18 error                         .js
+18 error                           Field 'browser' doesn't contain a valid alias configuration
+18 error                           /Users/xujun/Documents/codes/webDocker/packages/vue/vue-application/node_modules/@webdocker/core/index.js doesn't exist
+18 error       /Users/xujun/Documents/codes/webDocker/packages/vue/node_modules doesn't exist or is not a directory
+18 error       /Users/xujun/Documents/codes/webDocker/packages/node_modules doesn't exist or is not a directory
+18 error       looking for modules in /Users/xujun/Documents/codes/webDocker/node_modules
+18 error         single file module
+18 error           using description file: /Users/xujun/Documents/codes/webDocker/package.json (relative path: ./node_modules/@webdocker/core)
+18 error             no extension
+18 error               Field 'browser' doesn't contain a valid alias configuration
+18 error               /Users/xujun/Documents/codes/webDocker/node_modules/@webdocker/core doesn't exist
+18 error             .ts
+18 error               Field 'browser' doesn't contain a valid alias configuration
+18 error               /Users/xujun/Documents/codes/webDocker/node_modules/@webdocker/core.ts doesn't exist
+18 error             .js
+18 error               Field 'browser' doesn't contain a valid alias configuration
+18 error               /Users/xujun/Documents/codes/webDocker/node_modules/@webdocker/core.js doesn't exist
+18 error         /Users/xujun/Documents/codes/webDocker/node_modules/@webdocker/core doesn't exist
+18 error       /Users/xujun/Documents/codes/node_modules doesn't exist or is not a directory
+18 error       /Users/xujun/Documents/node_modules doesn't exist or is not a directory
+18 error       /Users/xujun/node_modules doesn't exist or is not a directory
+18 error       /Users/node_modules doesn't exist or is not a directory
+18 error       /node_modules doesn't exist or is not a directory
+18 error  @ ./src/application.vue?vue&type=script&lang=js& 1:0-165 1:181-184 1:186-348 1:186-348
+18 error  @ ./src/application.vue 2:0-63 3:0-58 3:0-58 9:2-8
+18 error  @ ./src/index.js 1:0-44 2:0-23
+18 error
+18 error webpack 5.74.0 compiled with 1 error in 1129 ms
+18 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+18 error
+18 error     at /Users/xujun/Documents/codes/webDocker/node_modules/execa/index.js:236:11
