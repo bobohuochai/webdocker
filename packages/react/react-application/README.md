@@ -39,7 +39,7 @@ export default function LightYearMicroApp() {
 | name | string | 必填，子应用名称 |
 | manifest | object | 必填，{styles:string[],scripts:string[]}，子应用静态资源  |
 | initialPath | string | 选填，微应用初始路径，只有在sandbox 为iframe 时生效 |
-|config|object| 选填，{sandbox?: boolean \| { iframe: boolean;};dynamicPatch?: boolean;}|
+|config|object| 选填，{sandbox?: boolean \| { iframe: boolean;};dynamicPatch?: boolean;},默认开启proxy 沙箱,sandbox 表示 是否使用沙箱，是否使用iframe沙箱库，dynamicPatch 默认不开启懒加载， 表示微应用是否开启懒加载,|
 |loading|boolean\|object|选填，boolean\|React.ReactElement|
 |error|boolean\|object|选填，boolean\|React.ReactElement|
 |microAppDidMount|function|选填，微应用加载完成后的处理函数|
