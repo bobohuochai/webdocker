@@ -10,7 +10,7 @@ export function patchAtMounting(
   sandbox:SandBox,
   config:FrameworkConfiguration,
 ) {
-  const { dynamicPatch = false, globalComponentClassPatch = true } = config;
+  const { dynamicPatch = true, globalComponentClassPatch = true } = config;
   let patchers:any[] = [];
   patchers = [() => patchInterval(sandbox.proxy), () => patchWindowListener(sandbox.proxy),
   ];
