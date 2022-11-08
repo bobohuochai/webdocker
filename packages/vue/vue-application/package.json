@@ -1,6 +1,6 @@
 {
     "name": "@webdocker/vue-host-application",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Vue Host Application Component",
     "main": "./dist/index.js",
     "keywords": [
