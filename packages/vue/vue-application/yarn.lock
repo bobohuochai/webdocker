@@ -427,10 +427,10 @@
     "@webassemblyjs/ast" "1.11.1"
     "@xtuc/long" "4.2.2"
 
-"@webdocker/core@*":
-  version "1.0.5"
-  resolved "http://npm.pingpongx.org/@webdocker%2fcore/-/core-1.0.5.tgz#b29df265cdb4620c2a05a4c57c7249e4741c835a"
-  integrity sha512-XVUxVncQi3mOr8+8YvAve2xtL0hyrPMD7TdnfaD12ZudUjTK60EApXu4IHnfQtsobgnHGh+/eWuev0363h9cBA==
+"@webdocker/core@^1.0.6":
+  version "1.0.6"
+  resolved "http://npm.pingpongx.org/@webdocker%2fcore/-/core-1.0.6.tgz#beaefb60cc29de70790310fd24ffb57fd332f1b1"
+  integrity sha512-c3L/8Vs+YgXLeuLRqRcww2hjN2y94GfoHWKVlzAUu4FkQjHMEKNuvkjj1D9Ge9xsll9ek7Ticp+/TgZ+MoEhMw==
   dependencies:
     import-html-entry "^1.14.0"
     lodash "^4.17.21"
