@@ -1,4 +1,4 @@
-import type { Entry } from 'import-html-entry';
+import { Entry } from 'import-html-entry';
 
 declare global {
   interface Window {

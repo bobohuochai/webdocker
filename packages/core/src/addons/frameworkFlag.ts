@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import type { FrameworkLifecycles } from '../interface';
+import { FrameworkLifecycles } from '../interface';
 
 export default function getAddOn(global:Window):FrameworkLifecycles<any> {
   return {

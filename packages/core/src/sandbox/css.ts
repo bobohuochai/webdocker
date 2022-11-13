@@ -1,5 +1,4 @@
-import postcss from 'postcss';
-import type { ChildNode } from 'postcss';
+import postcss, { ChildNode } from 'postcss';
 
 // style标签插入body
 const rawDocumentBodyAppend = HTMLBodyElement.prototype.appendChild;
