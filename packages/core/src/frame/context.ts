@@ -42,7 +42,6 @@ class Context implements SandBox {
   constructor(config:IframeContextConfig, iframe:HTMLIFrameElement) {
     this.name = config.id;
     this.baseFrame = iframe;
-    console.log('iframe window', (iframe.contentWindow! as any).browerCollector);
     this.location = new Location(iframe.contentWindow!.location).proxy;
     this.history = new History(config.id, iframe.contentWindow!).proxy;
     this.body = document.body;

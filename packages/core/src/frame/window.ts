@@ -48,7 +48,6 @@ class WindowProxy {
       set: (target, name, value) => {
         (target as any)[name] = value;
         __WEBDOCER_GLOBAL_VARS__[name] = value;
-        console.log('latestSetProp===>', name);
         this.latestSetProp = name;
         return true;
       },
