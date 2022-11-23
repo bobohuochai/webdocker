@@ -1,12 +1,13 @@
 {
   "name": "@webdocker/data",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "@webdocker/data is a js lib for webdocker,used for communication",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
     "build": "rm -rf lib && tsc -p tsconfig.build.json",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "publish": "npm publish --access public"
   },
   "keywords": [
     "microfrontends",
@@ -43,5 +44,10 @@
       "^.+\\.ts$": "<rootDir>/node_modules/ts-jest"
     },
     "testEnvironment": "jsdom"
-  }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "private": false
 }

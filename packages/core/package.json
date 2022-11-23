@@ -1,6 +1,6 @@
 {
   "name": "@webdocker/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "web loader container",
   "main": "./lib/index.js",
   "typings": "lib/index.d.ts",
@@ -10,7 +10,8 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test jest",
     "lint": "eslint",
-    "build": "rm -rf lib && tsc -p tsconfig.build.json"
+    "build": "rm -rf lib && tsc -p tsconfig.build.json",
+    "publish": "npm publish --access public"
   },
   "author": "xujun",
   "license": "MIT",
@@ -51,5 +52,10 @@
     "transform": {
       "^.+\\.ts$": "<rootDir>/node_modules/ts-jest"
     }
-  }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "private": false
 }
