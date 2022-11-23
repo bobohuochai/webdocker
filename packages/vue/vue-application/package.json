@@ -1,6 +1,6 @@
 {
     "name": "@webdocker/vue-host-application",
-    "version": "1.0.0",
+    "version": "1.0.9",
     "description": "Vue Host Application Component",
     "main": "./dist/index.js",
     "keywords": [
@@ -13,7 +13,7 @@
         "build": "webpack --config ./webpack.config.js"
     },
     "dependencies": {
-        "@webdocker/core": "^1.0.6",
+        "@webdocker/core": "^1.0.9",
         "vue-loading-overlay": "^3.0"
     },
     "peerDependencies": {
