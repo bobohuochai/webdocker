@@ -1,6 +1,6 @@
 {
   "name": "@webdocker/react-host-application",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "React Host Application Component",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
